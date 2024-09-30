@@ -1,1 +1,1 @@
-# Qt
+# Repo for C++ cource
