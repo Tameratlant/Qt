@@ -1,5 +1,12 @@
-#include "mainwindow.cpp"
 
+#include <QApplication>
+#include <QWidget>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QVBoxLayout>
+#include <QDateTime>
+#include <QFile>
+#include <QTextStream>
 
 class MyWidget : public QWidget {
 public:
