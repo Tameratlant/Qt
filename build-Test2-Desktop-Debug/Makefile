@@ -54,16 +54,16 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../Test2/main.cpp \
 		../Test2/mainwindow.cpp \
-		../Test2/secondwindow.cpp \
+		../Test2/media.cpp \
 		../Test2/mouse.cpp moc_mainwindow.cpp \
-		moc_secondwindow.cpp \
+		moc_media.cpp \
 		moc_mouse.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		secondwindow.o \
+		media.o \
 		mouse.o \
 		moc_mainwindow.o \
-		moc_secondwindow.o \
+		moc_media.o \
 		moc_mouse.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -144,10 +144,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../Test2/Test2.pro ../Test2/mainwindow.h \
-		../Test2/secondwindow.h \
+		../Test2/media.h \
 		../Test2/mouse.h ../Test2/main.cpp \
 		../Test2/mainwindow.cpp \
-		../Test2/secondwindow.cpp \
+		../Test2/media.cpp \
 		../Test2/mouse.cpp
 QMAKE_TARGET  = Test2
 DESTDIR       = 
@@ -157,7 +157,7 @@ TARGET        = Test2
 first: all
 ####### Build rules
 
-Test2: ui_mainwindow.h ui_secondwindow.h ui_mouse.h $(OBJECTS)  
+Test2: ui_mainwindow.h ui_media.h ui_mouse.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../Test2/Test2.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -334,9 +334,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Test2/mainwindow.h ../Test2/secondwindow.h ../Test2/mouse.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Test2/main.cpp ../Test2/mainwindow.cpp ../Test2/secondwindow.cpp ../Test2/mouse.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Test2/mainwindow.ui ../Test2/secondwindow.ui ../Test2/mouse.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../Test2/mainwindow.h ../Test2/media.h ../Test2/mouse.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Test2/main.cpp ../Test2/mainwindow.cpp ../Test2/media.cpp ../Test2/mouse.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Test2/mainwindow.ui ../Test2/media.ui ../Test2/mouse.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -368,20 +368,20 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_secondwindow.cpp moc_mouse.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_media.cpp moc_mouse.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_secondwindow.cpp moc_mouse.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_media.cpp moc_mouse.cpp
 moc_mainwindow.cpp: ../Test2/mainwindow.h \
-		../Test2/secondwindow.h \
+		../Test2/media.h \
 		../Test2/mouse.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/tamerlan/workspace/Qt/build-Test2-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/tamerlan/workspace/Qt/Test2 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Test2/mainwindow.h -o moc_mainwindow.cpp
 
-moc_secondwindow.cpp: ../Test2/secondwindow.h \
+moc_media.cpp: ../Test2/media.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/tamerlan/workspace/Qt/build-Test2-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/tamerlan/workspace/Qt/Test2 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Test2/secondwindow.h -o moc_secondwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/tamerlan/workspace/Qt/build-Test2-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/tamerlan/workspace/Qt/Test2 -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Test2/media.h -o moc_media.cpp
 
 moc_mouse.cpp: ../Test2/mouse.h \
 		moc_predefs.h \
@@ -392,16 +392,16 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_secondwindow.h ui_mouse.h
+compiler_uic_make_all: ui_mainwindow.h ui_media.h ui_mouse.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_secondwindow.h ui_mouse.h
+	-$(DEL_FILE) ui_mainwindow.h ui_media.h ui_mouse.h
 ui_mainwindow.h: ../Test2/mainwindow.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../Test2/mainwindow.ui -o ui_mainwindow.h
 
-ui_secondwindow.h: ../Test2/secondwindow.ui \
+ui_media.h: ../Test2/media.ui \
 		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic ../Test2/secondwindow.ui -o ui_secondwindow.h
+	/usr/lib/qt5/bin/uic ../Test2/media.ui -o ui_media.h
 
 ui_mouse.h: ../Test2/mouse.ui \
 		/usr/lib/qt5/bin/uic
@@ -418,31 +418,35 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 ####### Compile
 
 main.o: ../Test2/main.cpp ../Test2/mainwindow.h \
-		../Test2/secondwindow.h \
+		../Test2/media.h \
 		../Test2/mouse.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Test2/main.cpp
 
 mainwindow.o: ../Test2/mainwindow.cpp ../Test2/mainwindow.h \
-		../Test2/secondwindow.h \
+		../Test2/media.h \
 		../Test2/mouse.h \
 		../Test2/ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Test2/mainwindow.cpp
 
-secondwindow.o: ../Test2/secondwindow.cpp ../Test2/secondwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o secondwindow.o ../Test2/secondwindow.cpp
+media.o: ../Test2/media.cpp ../Test2/media.h \
+		ui_media.h \
+		../Test2/mainwindow.h \
+		../Test2/mouse.h \
+		../Test2/ui_mainwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o media.o ../Test2/media.cpp
 
 mouse.o: ../Test2/mouse.cpp ../Test2/mouse.h \
-		ui_mouse.h \
+		../Test2/ui_mouse.h \
 		../Test2/mainwindow.h \
-		../Test2/secondwindow.h \
+		../Test2/media.h \
 		../Test2/ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mouse.o ../Test2/mouse.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
-moc_secondwindow.o: moc_secondwindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_secondwindow.o moc_secondwindow.cpp
+moc_media.o: moc_media.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_media.o moc_media.cpp
 
 moc_mouse.o: moc_mouse.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mouse.o moc_mouse.cpp

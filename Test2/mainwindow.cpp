@@ -12,20 +12,23 @@ MainWindow::MainWindow(QWidget *parent)
 
     mouse = new Mouse(this);
     mouse->hide();
-    secondWindow = new SecondWindow(this);
-    secondWindow->hide();
+    //secondWindow = new SecondWindow(this);
+    //secondWindow->hide();
+
+    multimedia = new Media(this);
+    multimedia->hide();
     QSize size = this->size();
     // Центрируем кнопку на главном окне
-    ui->pushButton1->setGeometry(size.width()/3, size.height()/2, size.width()/6, 30);
+    //ui->pushButton1->setGeometry(size.width()/3, size.height()/2, size.width()/6, 30);
     ui->pushButton1->setText("Кнопк1");
-    ui->pushButton2->setGeometry(size.width()/3*2, size.height()/2, size.width()/6, 30);
+    //ui->pushButton2->setGeometry(size.width()/3*2, size.height()/2, size.width()/6, 30);
     ui->pushButton2->setText("Кнопк2");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete secondWindow;
+    delete multimedia;
 }
 
 void MainWindow::on_pushButton1_clicked()
@@ -37,7 +40,7 @@ void MainWindow::on_pushButton1_clicked()
     ui->pushButton2->setGeometry(size.width()/3*2, 10, size.width()/6, 30);
     // Показываем второе окно
     mouse->show();
-    secondWindow->hide();
+    multimedia->hide();
 }
 
 void MainWindow::on_pushButton2_clicked()
@@ -48,6 +51,6 @@ void MainWindow::on_pushButton2_clicked()
     ui->pushButton1->setGeometry(size.width()/3, 10, size.width()/6, 30);
     ui->pushButton2->setGeometry(size.width()/3*2, 10, size.width()/6, 30);
     // Показываем второе окно
-    secondWindow->show();
+    multimedia->show();
     mouse->hide();
 }

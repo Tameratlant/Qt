@@ -11,17 +11,17 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    secondwindow.cpp \
+    media.cpp \
     mouse.cpp
 
 HEADERS += \
     mainwindow.h \
-    secondwindow.h \
+    media.h \
     mouse.h
 
 FORMS += \
     mainwindow.ui \
-    secondwindow.ui \
+    media.ui \
     mouse.ui
 
 # Default rules for deployment.

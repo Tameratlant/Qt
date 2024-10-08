@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "secondwindow.h"
+#include "media.h"
 #include "mouse.h"
 
 QT_BEGIN_NAMESPACE
@@ -24,7 +24,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    SecondWindow *secondWindow;
+    Media *multimedia;
     Mouse *mouse;
 };
 #endif // MAINWINDOW_H

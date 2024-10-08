@@ -35,10 +35,10 @@ public:
     {
         if (Mouse->objectName().isEmpty())
             Mouse->setObjectName(QString::fromUtf8("Mouse"));
-        Mouse->resize(784, 471);
+        Mouse->resize(603, 470);
         layoutWidget = new QWidget(Mouse);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(120, 150, 531, 171));
+        layoutWidget->setGeometry(QRect(30, 150, 531, 171));
         gridLayout = new QGridLayout(layoutWidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -82,7 +82,7 @@ public:
 
         layoutWidget_2 = new QWidget(Mouse);
         layoutWidget_2->setObjectName(QString::fromUtf8("layoutWidget_2"));
-        layoutWidget_2->setGeometry(QRect(180, 110, 407, 19));
+        layoutWidget_2->setGeometry(QRect(90, 110, 407, 19));
         horizontalLayout = new QHBoxLayout(layoutWidget_2);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
