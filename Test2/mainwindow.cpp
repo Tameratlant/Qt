@@ -34,6 +34,7 @@ void MainWindow::on_pushButton1_clicked()
     //menuBar()->setVisible(false);
     QSize size = this->size();
     ui->pushButton1->setGeometry(size.width()/3, 10, size.width()/6, 30);
+    ui->pushButton2->setGeometry(size.width()/3*2, 10, size.width()/6, 30);
     // Показываем второе окно
     mouse->show();
     secondWindow->hide();
@@ -44,6 +45,7 @@ void MainWindow::on_pushButton2_clicked()
     // Скрываем главное меню
     //menuBar()->setVisible(false);
     QSize size = this->size();
+    ui->pushButton1->setGeometry(size.width()/3, 10, size.width()/6, 30);
     ui->pushButton2->setGeometry(size.width()/3*2, 10, size.width()/6, 30);
     // Показываем второе окно
     secondWindow->show();

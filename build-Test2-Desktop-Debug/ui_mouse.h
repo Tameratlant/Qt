@@ -82,7 +82,7 @@ public:
 
         layoutWidget_2 = new QWidget(Mouse);
         layoutWidget_2->setObjectName(QString::fromUtf8("layoutWidget_2"));
-        layoutWidget_2->setGeometry(QRect(170, 0, 407, 19));
+        layoutWidget_2->setGeometry(QRect(180, 110, 407, 19));
         horizontalLayout = new QHBoxLayout(layoutWidget_2);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
