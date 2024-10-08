@@ -8,8 +8,8 @@ Media::Media(QWidget *parent) :
 {
     ui->setupUi(this);
     setFocusPolicy(Qt::StrongFocus);
-    //ui->comboBox->addItem("Треугольник");
-    //ui->comboBox->addItem("Круг");
+    ui->comboBox->addItem("Треугольник");
+    ui->comboBox->addItem("Круг");
 
     ui->comboBox_2->addItem("Зеленый");
     ui->comboBox_2->addItem("Красный");
@@ -22,22 +22,28 @@ Media::Media(QWidget *parent) :
 
     figureLabel = new QLabel(this);
     figureLabel->setGeometry(50, 50, 500, 500);
-
+    QWidget *parentWidget1 = new QWidget;
+    QWidget *parentWidget2 = new QWidget;
     //connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &Media::onComboBoxIndexChanged);
     //connect(comboBox_2, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &Media::updateFigure);
     //connect(comboBox_3, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &Media::updateFigure);
     //connect(comboBox_4, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &Media::updateFigure);
 
 
-    //comboBox = ui->comboBox;
-    comboBox = new QComboBox(this);
-    comboBox->addItem("Треугольник");
-    comboBox->addItem("Треугольник1");
+    comboBox = ui->comboBox;
+    //comboBox = new QComboBox(this);
+    //comboBox->addItem("Треугольник");
+    //comboBox->addItem("Треугольник1");
     connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &Media::onComboBoxIndexChanged);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->addWidget(comboBox);
+    QHBoxLayout *layout2 = new QHBoxLayout(this);
+    parentWidget1->setLayout(layout);
+    parentWidget2->setLayout(layout2);
+    parentWidget1->setGeometry(100, 100, 200, 50);
+    parentWidget2->setGeometry(100, 500, 200, 50);
+    //layout2->addWidget(comboBox);
 
     //QVBoxLayout *layout2 = new QVBoxLayout(this);
     layout->addWidget(&label);
