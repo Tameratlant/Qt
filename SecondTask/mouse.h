@@ -4,20 +4,23 @@
 #include <QWidget>
 #include <QtGui>
 #include <QDebug>
+
+QT_BEGIN_NAMESPACE
 namespace Ui {
 class Mouse;
 }
+QT_END_NAMESPACE
 
-class Mouse : public QWidget
-{
-    Q_OBJECT
+class Mouse : public QWidget {
+  Q_OBJECT
 
 public:
-    explicit Mouse(QWidget *parent = nullptr);
-    ~Mouse();
+  Mouse(QWidget *parent = nullptr);
+  ~Mouse();
 
 private:
-    Ui::Mouse *ui;
+
+  Ui::Mouse *ui;
 
 protected:
 
@@ -25,5 +28,6 @@ protected:
   void mousePressEvent(QMouseEvent *event) override;
 
   void paintEvent(QPaintEvent *event) override;
+
 };
-#endif // MOUSE_H
+#endif // __mousehandler_hpp_

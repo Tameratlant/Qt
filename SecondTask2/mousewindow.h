@@ -1,23 +1,26 @@
-#ifndef MOUSE_H
-#define MOUSE_H
+#ifndef MOUSE_WINDOW_H
+#define MOUSE_WINDOW_H
 
 #include <QWidget>
 #include <QtGui>
 #include <QDebug>
-namespace Ui {
-class Mouse;
-}
 
-class Mouse : public QWidget
-{
-    Q_OBJECT
+QT_BEGIN_NAMESPACE
+namespace Ui {
+class MouseWindow;
+}
+QT_END_NAMESPACE
+
+class MouseWindow : public QWidget {
+  Q_OBJECT
 
 public:
-    explicit Mouse(QWidget *parent = nullptr);
-    ~Mouse();
+  MouseWindow(QWidget *parent = nullptr);
+  ~MouseWindow();
 
 private:
-    Ui::Mouse *ui;
+
+  Ui::MouseWindow *ui;
 
 protected:
 
@@ -25,5 +28,6 @@ protected:
   void mousePressEvent(QMouseEvent *event) override;
 
   void paintEvent(QPaintEvent *event) override;
+
 };
-#endif // MOUSE_H
+#endif // MOUSE_WINDOW_H
