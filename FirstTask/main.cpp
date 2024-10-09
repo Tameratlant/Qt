@@ -1,3 +1,4 @@
+
 #include <QApplication>
 #include <QWidget>
 #include <QPushButton>
@@ -49,6 +50,10 @@ private:
     QLineEdit *lineEdit1, *lineEdit2;
     QPushButton *button;
 };
+
+
+#include "mainwindow.cpp"
+
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
