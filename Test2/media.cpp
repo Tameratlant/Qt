@@ -8,6 +8,7 @@ Media::Media(QWidget *parent) :
 {
     ui->setupUi(this);
     setFocusPolicy(Qt::StrongFocus);
+    /*
     ui->comboBox->addItem("Треугольник");
     ui->comboBox->addItem("Круг");
 
@@ -30,25 +31,54 @@ Media::Media(QWidget *parent) :
     //connect(comboBox_4, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &Media::updateFigure);
 
 
-    comboBox = ui->comboBox;
-    //comboBox = new QComboBox(this);
-    //comboBox->addItem("Треугольник");
-    //comboBox->addItem("Треугольник1");
-    connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this, &Media::onComboBoxIndexChanged);
+    //comboBox = ui->comboBox;
+    comboBox = new QComboBox(this);
+    */
+    shapeComboBox = ui->comboBox;
+    shapeComboBox->addItem("Круг");
+    shapeComboBox->addItem("Квадрат");
+    shapeComboBox->addItem("Треугольник");
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    QHBoxLayout *layout2 = new QHBoxLayout(this);
-    parentWidget1->setLayout(layout);
-    parentWidget2->setLayout(layout2);
-    parentWidget1->setGeometry(100, 100, 200, 50);
-    parentWidget2->setGeometry(100, 500, 200, 50);
-    //layout2->addWidget(comboBox);
+    colorComboBox = ui->comboBox_2;
+    colorComboBox->addItem("Красный");
+    colorComboBox->addItem("Зеленый");
+    colorComboBox->addItem("Синий");
 
-    //QVBoxLayout *layout2 = new QVBoxLayout(this);
-    layout->addWidget(&label);
-    onComboBoxIndexChanged(0);
-    //updateFigure();
+    borderComboBox = ui->comboBox_3;
+    borderComboBox->addItem("Красный");
+    borderComboBox->addItem("Зеленый");
+    borderComboBox->addItem("Синий");
+
+    brushComboBox = ui->comboBox_4;
+    brushComboBox->addItem("Сплошная");
+    brushComboBox->addItem("Горизонтальная");
+    brushComboBox->addItem("Вертикальная");
+
+    // Подключаем сигналы к слотам
+    connect(shapeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &Media::onShapeChanged);
+    connect(colorComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &Media::onColorChanged);
+    connect(borderComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &Media::onBorderChanged);
+    connect(brushComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &Media::onGutsChanged);
+
+    // Устанавливаем layout
+    QHBoxLayout *topLayout = new QHBoxLayout;
+    //topLayout->addWidget(shapeComboBox);
+    //topLayout->addWidget(colorComboBox);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->addLayout(topLayout);
+
+    // Начальные значения
+    onShapeChanged(0);
+    onColorChanged(0);
+    onBorderChanged(0);
+    onGutsChanged(0);
+
+    //resize(300, 200);
 }
 
 Media::~Media()
@@ -56,83 +86,36 @@ Media::~Media()
     delete ui;
 }
 
-void Media::paintEvent(QPaintEvent *event)
-{
-    QPainter painter(this);
-    painter.setPen(Qt::black);
-    painter.setBrush(Qt::green);
+void Media::paintEvent(QPaintEvent *event) {
+        QPainter painter(this);
+        painter.setPen(borderColor);
+        QPen pen(borderColor, 3);
+        painter.setPen(pen);
+        painter.setBrush(color);
+        // Получаем центр окна
+        int centerX = width() / 2;
+        int centerY = height() / 2;
 
-    if (shape == "Круг") {
-        painter.drawEllipse(rect().center(), rect().width() / 2, rect().height() / 2);
-    } else if (shape == "Квадрат") {
-        painter.drawRect(rect());
-    }
-
-
-
-
-    /*
-    QPainter painter(this);
-
-    // Определяем параметры фигуры на основе выбранных значений
-    QColor color;
-    Qt::PenStyle penStyle;
-    Qt::BrushStyle brushStyle;
-
-    QPolygon triangle;
-    triangle << QPoint(50, 10) << QPoint(10, 50) << QPoint(10, 10);
-    painter.drawPolygon(triangle);
-
-    switch (comboBox_2->currentIndex()) {
-        case 0:
-            color = Qt::green;
-            break;
-        // ... другие цвета
-    }
-
-    switch (comboBox_3->currentIndex()) {
-        case 0:
-            penStyle = Qt::SolidLine;
-            break;
-        case 1:
-            penStyle = Qt::DashLine;
-            break;
-        // ... другие стили линий
-    }
-
-    switch (comboBox_4->currentIndex()) {
-        case 0:
-            brushStyle = Qt::SolidPattern;
-            break;
-        case 1:
-            brushStyle = Qt::DiagCrossPattern;
-            break;
-        // ... другие стили заливки
-    }
-
-    QPen pen(color, 2, penStyle);
-    QBrush brush(color, brushStyle);
-    painter.setPen(pen);
-    painter.setBrush(brush);
-
-    // Рисуем фигуру в зависимости от выбранного типа
-    switch (comboBox->currentIndex()) {
-        case 0: // Треугольник
-    {
-            QPolygon triangle;
-            triangle << QPoint(50, 10) << QPoint(10, 50) << QPoint(10, 10);
+        // Рисуем фигуру
+        if (shape == "Круг") {
+            painter.setBrush(Qt::BrushStyle(brush));
+            painter.setBrush(color);
+            painter.drawEllipse(centerX - 50, centerY - 50, 100, 100);
+        } else if (shape == "Квадрат") {
+            painter.setBrush(Qt::BrushStyle(brush));
+            painter.setBrush(color);
+            painter.drawRect(centerX - 50, centerY - 50, 100, 100);
+        } else if (shape == "Треугольник") {
+            // Рисуем треугольник
+            QPolygonF triangle;
+            triangle << QPointF(centerX, centerY - 50) // Вершина
+                    << QPointF(centerX - 50, centerY + 50) // Левая нижняя вершина
+                    << QPointF(centerX + 50, centerY + 50); // Правая нижняя вершина
+            painter.setBrush(Qt::BrushStyle(brush));
+            painter.setBrush(color);
             painter.drawPolygon(triangle);
-            break;
+        }
     }
-        case 1: // Круг
-    {
-            painter.drawEllipse(500, 500, 500, 500);
-            break;
-        // ... другие фигуры
-    }
-    }
-    */
-}
 
 void Media::updateFigure()
 {
@@ -151,4 +134,48 @@ void Media::onComboBoxIndexChanged(int index) {
         }
         update(); // Перерисовываем виджет
     }
+
+void Media::onShapeChanged(int index) {
+    if (index == 0) {
+        shape = "Круг";
+    } else if (index == 1) {
+        shape = "Квадрат";
+    } else if (index == 2) {
+        shape = "Треугольник";
+    }
+    update();
+}
+
+void Media::onColorChanged(int index) {
+    if (index == 0) {
+        color = Qt::red;
+    } else if (index == 1) {
+        color = Qt::green;
+    } else if (index == 2) {
+        color = Qt::blue;
+    }
+    update();
+}
+
+void Media::onBorderChanged(int index) {
+    if (index == 0) {
+        borderColor = Qt::red;
+    } else if (index == 1) {
+        borderColor = Qt::green;
+    } else if (index == 2) {
+        borderColor = Qt::blue;
+    }
+    update();
+}
+
+void Media::onGutsChanged(int index) {
+    if (index == 0) {
+        brush = Qt::SolidPattern;
+    } else if (index == 1) {
+        brush = Qt::HorPattern;
+    } else if (index == 2) {
+        brush = Qt::VerPattern;
+    }
+    update();
+}
 

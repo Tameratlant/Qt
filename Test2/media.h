@@ -21,6 +21,10 @@ class Media : public QWidget
     QComboBox *comboBox_2;
     QComboBox *comboBox_3;
     QComboBox *comboBox_4;
+    QComboBox *shapeComboBox;
+    QComboBox *colorComboBox;
+    QComboBox *borderComboBox;
+    QComboBox *brushComboBox;
     QLabel *figureLabel;
 
 
@@ -29,8 +33,15 @@ public:
     void updateFigure();
     void paintEvent(QPaintEvent *event);
     void onComboBoxIndexChanged(int index);
+    void onShapeChanged(int index);
+    void onColorChanged(int index);
+    void onGutsChanged(int index);
+    void onBorderChanged(int index);
     QLabel label;
     QString shape = "Круг";
+    Qt::GlobalColor color = Qt::red;
+    Qt::GlobalColor borderColor = Qt::red;
+    Qt::BrushStyle brush = Qt::NoBrush;
     ~Media();
 
 private:
