@@ -2,6 +2,7 @@
 #define POLYGON_H
 
 #include <QList>
+#include <QPainter>
 #include "point.h"
 
 class Polygon {
