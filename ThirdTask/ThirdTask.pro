@@ -14,6 +14,7 @@ SOURCES += \
     polygon.cpp
 
 HEADERS += \
+    edge.h \
     mainwindow.h \
     point.h \
     polygon.h

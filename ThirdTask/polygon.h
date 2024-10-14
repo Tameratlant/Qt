@@ -7,9 +7,9 @@
 
 class Polygon {
 public:
-    QList<Point> points;
+    QList<QPoint> points;
 
-    void addPoint(const Point& point) { points.append(point); }
+    void addPoint(const QPoint &point) { points.append(point); }
     void draw(QPainter& painter);
 };
 
