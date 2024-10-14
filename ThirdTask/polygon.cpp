@@ -1,5 +1,5 @@
 #include "polygon.h"
-
+#include "reorder.cpp"
 
 void Polygon::draw(QPainter &painter) {
     if (points.size() < 2) {
@@ -17,3 +17,30 @@ void Polygon::draw(QPainter &painter) {
         painter.drawLine(points.last(), points.first());
     }
 }
+    void Polygon::reorderPoints() {
+        QList<Point> tmp = grahamScan(points);
+        points.clear();
+        points = tmp;
+    }
+
+    void Polygon::fillEdges() {
+        for (int i = 0; i < points.size(); ++i) {
+            if (i == points.size() - 1)
+            {
+                auto start = std::make_shared<Point>(points[i]);
+                auto end = std::make_shared<Point>(points[0]);
+
+                Edge tmp(start, end);
+                edges.append(tmp);
+                //points[i].right = std::make_shared<Edge>(tmp);
+                //points[0].left = std::make_shared<Edge>(tmp);
+            }
+            auto start = std::make_shared<Point>(points[i]);
+            auto end = std::make_shared<Point>(points[i+1]);
+
+            Edge tmp(start, end);
+            edges.append(tmp);
+            //points[i].right = std::make_shared<Edge>(tmp);
+            //points[i+1].left = std::make_shared<Edge>(tmp);
+        }
+    }

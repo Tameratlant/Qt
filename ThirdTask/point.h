@@ -1,11 +1,18 @@
 #ifndef POINT_H
 #define POINT_H
+#include <QPoint>
+#include <edge.h>
 
-class Point {
+class Point : public QPoint {
+
 public:
-    double x, y;
 
-    Point(double x = 0, double y = 0) : x(x), y(y) {}
-};
+    //std::shared_ptr<Edge> left;
+    //std::shared_ptr<Edge> right;
+
+    Point() : QPoint() {} // Конструктор по умолчанию
+    Point(int x, int y) : QPoint(x, y) {} // Конструктор с координатами
+
+    };
 
 #endif // POINT_H
