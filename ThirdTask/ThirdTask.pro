@@ -11,7 +11,8 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    polygon.cpp
+    polygon.cpp \
+    reorder.cpp
 
 HEADERS += \
     edge.h \

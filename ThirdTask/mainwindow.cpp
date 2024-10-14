@@ -84,15 +84,15 @@ void MainWindow::drawPolygon() {
     QPainter painter(this);
     //polygon.draw(painter);
     painter.setPen(Qt::black);
-    QList<QPoint> points = polygon.points;
+    //QList<QPoint> points = polygon.points;
     // Рисуем линии между точками
-    for (int i = 1; i < points.size(); ++i) {
-        painter.drawLine(points[i - 1], points[i]);
+    for (int i = 1; i < polygon.points.size(); ++i) {
+        painter.drawLine(polygon.points[i - 1], polygon.points[i]);
     }
 
     // Дополнительная линия, чтобы замкнуть полигон
-    if (points.size() > 2) {
-        painter.drawLine(points.last(), points.first());
+    if (polygon.points.size() > 2) {
+        painter.drawLine(polygon.points.last(), polygon.points.first());
     }
 }
 

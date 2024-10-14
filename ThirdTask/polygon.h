@@ -3,14 +3,18 @@
 
 #include <QList>
 #include <QPainter>
+#include "edge.h"
 #include "point.h"
 
 class Polygon {
 public:
-    QList<QPoint> points;
-
-    void addPoint(const QPoint &point) { points.append(point); }
+    QList<Point> points;
+    QList<Edge> edges;
+    void addPoint(const Point point) { points.append(point); }
     void draw(QPainter& painter);
+    void reorderPoints();
+    void fillEdges();
+    void fillPoints();
 };
 
 #endif // POLYGON_H
