@@ -15,6 +15,7 @@ public:
     void reorderPoints();
     void fillEdges();
     void fillPoints();
+    bool isPointInsidePolygon(const Point& point);
 };
 
 #endif // POLYGON_H

@@ -7,6 +7,8 @@
 #include <QLabel>
 #include "polygon.h"
 #include <QVBoxLayout>
+#include <QWidget>
+#include <QtGui>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,12 +27,17 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    int n = 0;
+    QLineEdit* editN;
+    QVBoxLayout* points_num_layout;
     Polygon polygon;
     QList<QLineEdit*> inputFields; // Список для хранения указателей на поля ввода
     QVBoxLayout* inputLayout; // Указатель на layout с полями ввода
     void createInputFields();
+    void mousePressEvent(QMouseEvent *event);
     void drawPolygon();
     void paintEvent(QPaintEvent *event);
+    void n_okButton_clicked();
 };
 
 #endif // MAINWINDOW_H
