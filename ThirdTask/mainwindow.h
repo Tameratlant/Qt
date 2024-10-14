@@ -30,6 +30,7 @@ private:
     QVBoxLayout* inputLayout; // Указатель на layout с полями ввода
     void createInputFields();
     void drawPolygon();
+    void paintEvent(QPaintEvent *event);
 };
 
 #endif // MAINWINDOW_H

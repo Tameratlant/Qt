@@ -7,7 +7,7 @@
 #include <QPainter>
 #include <QMessageBox>
 #include <QDebug>
-
+#include <QList>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -50,9 +50,10 @@ void MainWindow::on_okButton_clicked() {
     // Считываем данные из полей ввода и добавляем точки в полигон
     for (int i = 0; i < inputFields.size(); i += 2) {
         bool ok;
-        double x = inputFields.at(i)->text().toDouble(&ok);
-        double y = inputFields.at(i + 1)->text().toDouble(&ok);
+        int x = inputFields.at(i)->text().toInt(&ok);
+        int y = inputFields.at(i + 1)->text().toInt(&ok);
         if (ok) {
+            qDebug() << x;
             polygon.addPoint({x, y});
         } else {
             QMessageBox::warning(this, "Ошибка", "Некорректный ввод координат");
@@ -73,10 +74,26 @@ void MainWindow::on_okButton_clicked() {
     update();
 }
 
+void MainWindow::paintEvent(QPaintEvent *event) {
+        QPainter painter(this);
+        drawPolygon();
+        QWidget::paintEvent(event);
+    }
 void MainWindow::drawPolygon() {
     qDebug() << "!!!";
     QPainter painter(this);
-    polygon.draw(painter);
+    //polygon.draw(painter);
+    painter.setPen(Qt::black);
+    QList<QPoint> points = polygon.points;
+    // Рисуем линии между точками
+    for (int i = 1; i < points.size(); ++i) {
+        painter.drawLine(points[i - 1], points[i]);
+    }
+
+    // Дополнительная линия, чтобы замкнуть полигон
+    if (points.size() > 2) {
+        painter.drawLine(points.last(), points.first());
+    }
 }
 
 MainWindow::~MainWindow()
