@@ -1,6 +1,6 @@
 #include "polygon.h"
 #include "reorder.cpp"
-
+/*
 void Polygon::draw(QPainter &painter) {
     if (points.size() < 2) {
         return; // Нужно минимум 2 точки для рисования
@@ -17,6 +17,18 @@ void Polygon::draw(QPainter &painter) {
         painter.drawLine(points.last(), points.first());
     }
 }
+*/
+
+void Polygon::draw(QPainter &painter) {
+    // Проходим по всем ребрам
+    for (const auto &edge : this->edges) {
+        // Устанавливаем цвет пера
+        painter.setPen(QPen(edge.color));
+
+        // Рисуем линию между точками
+        painter.drawLine(QPoint(edge.A.x(), edge.A.y()), QPoint(edge.B.x(), edge.B.y()));
+    }
+}
 void Polygon::reorderPoints() {
     QList<Point> tmp = grahamScan(points);
     points.clear();
@@ -24,21 +36,23 @@ void Polygon::reorderPoints() {
 }
 
 void Polygon::fillEdges() {
+    qDebug() << "size" << points.size();
     for (int i = 0; i < points.size(); ++i) {
         if (i == points.size() - 1)
         {
-            auto start = std::make_shared<Point>(points[i]);
-            auto end = std::make_shared<Point>(points[0]);
-
-            Edge tmp(start, end);
+            //auto start = std::make_shared<Point>(points[points.size() - 1]);
+            //auto end = std::make_shared<Point>(points[0]);
+            //Edge tmp(start, end);
+            Edge tmp(points[points.size() - 1], points[0]);
             edges.append(tmp);
             //points[i].right = std::make_shared<Edge>(tmp);
             //points[0].left = std::make_shared<Edge>(tmp);
+            break;
         }
-        auto start = std::make_shared<Point>(points[i]);
-        auto end = std::make_shared<Point>(points[i+1]);
-
-        Edge tmp(start, end);
+        //auto start = std::make_shared<Point>(points[i]);
+        //auto end = std::make_shared<Point>(points[i+1]);
+        //Edge tmp(start, end);
+        Edge tmp(points[i], points[i+1]);
         edges.append(tmp);
         //points[i].right = std::make_shared<Edge>(tmp);
         //points[i+1].left = std::make_shared<Edge>(tmp);

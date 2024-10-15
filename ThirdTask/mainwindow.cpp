@@ -84,37 +84,10 @@ void MainWindow::n_okButton_clicked() {
     //update();
     setMouseTracking(true);
     showInputFields();
+    showEdgesSettings();
 }
 
-void MainWindow::showEdgesSettings() {
-    QVBoxLayout* edgesLayout = ui->edgesLayout;
-    // Создаем layout для полей ввода и кнопки
-    auto title = new QLabel("Ребра:(введите цвета)");
-    edgesInputLayout = new QVBoxLayout;
-    for (int i = 0; i < n-1; ++i) {
-        std::string title = std::to_string(i+1)+"=====>" + std::to_string(i+2);
-        QLabel* title_i = new QLabel(QString::fromStdString(title));
-        QLineEdit* edge_i = new QLineEdit;
-        edgesInputLayout->addWidget(title_i);
-        edgesInputLayout->addWidget(edge_i);
-        colorInputFields.append(edge_i);
-    }
-    std::string title_0 = std::to_string(n)+"=====>" + std::to_string(1);
-    QLabel* title_i = new QLabel(QString::fromStdString(title_0));
-    QLineEdit* edge_i = new QLineEdit;
-    edgesInputLayout->addWidget(title_i);
-    edgesInputLayout->addWidget(edge_i);
-    colorInputFields.append(edge_i);
-    edgesLayout->addWidget(title);
-    // Добавляем layout с полями ввода в главный layout
-    edgesLayout->addLayout(edgesInputLayout);
-}
-
-void MainWindow::on_okButton_clicked() {
-    polygon.points.clear();
-    polygon.edges.clear();
-
-    // Считываем данные из полей ввода и добавляем точки в полигон
+void MainWindow::hideInputFields() {
     for (int i = 0; i < inputFields.size(); i += 2) {
         bool ok;
         int x = inputFields.at(i)->text().toInt(&ok);
@@ -146,7 +119,53 @@ void MainWindow::on_okButton_clicked() {
             widget->hide();
         }
     }
+}
+
+
+void MainWindow::showEdgesSettings() {
+    QVBoxLayout* edgesLayout = ui->edgesLayout;
+    // Создаем layout для полей ввода и кнопки
+    //auto title = new QLabel("Ребра:(введите цвета)");
+    edgesInputLayout = new QVBoxLayout;
+    for (int i = 0; i < n-1; ++i) {
+        std::string title = "Цвет ребра " + std::to_string(i+1)+ "=====>" + std::to_string(i+2);
+        QLabel* title_i = new QLabel(QString::fromStdString(title));
+        QLineEdit* edge_i = new QLineEdit;
+        edgesInputLayout->addWidget(title_i);
+        edgesInputLayout->addWidget(edge_i);
+        colorInputFields.append(edge_i);
+    }
+    std::string title_0 = "Цвет ребра " + std::to_string(n)+ "=====>" + std::to_string(1);
+    QLabel* title_i = new QLabel(QString::fromStdString(title_0));
+    QLineEdit* edge_i = new QLineEdit;
+
+    //edgesLayout->addWidget(title);
+    // Добавляем layout с полями ввода в главный layout
+    edgesLayout->addLayout(edgesInputLayout);
+    edgesInputLayout->addWidget(title_i);
+    edgesInputLayout->addWidget(edge_i);
+    colorInputFields.append(edge_i);
+}
+
+void MainWindow::hideEdgesSettings() {
     /*
+    for (int i = 0; i < edgesLayout->count(); ++i) {
+        QWidget *widget = edgesLayout->itemAt(i)->widget();
+        if (widget) {
+            widget->hide();
+        }
+    }
+
+    */
+    for (int i = 0; i < edgesInputLayout->count(); ++i) {
+        QWidget *widget = edgesInputLayout->itemAt(i)->widget();
+        if (widget) {
+            widget->hide();
+        }
+    }
+    polygon.reorderPoints();
+    polygon.fillEdges();
+
     for (int i = 0; i < colorInputFields.size(); i++) {
         QString colorText = colorInputFields.at(i)->text();
         QColor color;
@@ -160,20 +179,19 @@ void MainWindow::on_okButton_clicked() {
             // Можно добавить сообщение об ошибке для пользователя
         }
     }
-    for (int i = 0; i < edgesLayout->count(); ++i) {
-        QWidget *widget = edgesLayout->itemAt(i)->widget();
-        if (widget) {
-            widget->hide();
-        }
-    }
-    QHBoxLayout *inner2Layout = points_num_layout->findChild<QHBoxLayout*>("edgesInputLayout");
-    for (int i = 0; i < inner2Layout->count(); ++i) {
-        QWidget *widget = innerLayout->itemAt(i)->widget();
-        if (widget) {
-            widget->hide();
-        }
-    }
-    */
+
+
+}
+
+
+void MainWindow::on_okButton_clicked() {
+    polygon.points.clear();
+    polygon.edges.clear();
+
+    // Считываем данные из полей ввода и добавляем точки в полигон
+    hideInputFields();
+    hideEdgesSettings();
+
     drawPolygon();
     update();
     setMouseTracking(true);
