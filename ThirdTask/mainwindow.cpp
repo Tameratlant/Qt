@@ -8,6 +8,8 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QList>
+#include <QtWidgets>
+#include <QColor>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -22,11 +24,17 @@ MainWindow::MainWindow(QWidget *parent)
     n_ok->addWidget(nOkButton);
     connect(nOkButton, &QPushButton::clicked, this, &MainWindow::n_okButton_clicked);
     points_num_layout->addLayout(n_ok);
+    /*
+    for (int i = 0; i < edgesLayout->count(); ++i) {
+        QWidget *widget = edgesLayout->itemAt(i)->widget();
+        if (widget) {
+            widget->hide();
+        }
+    }
+    */
+}
 
-
-
-
-
+void MainWindow::showInputFields() {
     QVBoxLayout* mainLayout = ui->verticalLayout;
     // Создаем layout для полей ввода и кнопки
     inputLayout = new QVBoxLayout;
@@ -72,12 +80,40 @@ void MainWindow::n_okButton_clicked() {
     }
 
     // Перерисовываем окно
-    drawPolygon();
-    update();
+    //drawPolygon();
+    //update();
     setMouseTracking(true);
+    showInputFields();
+}
+
+void MainWindow::showEdgesSettings() {
+    QVBoxLayout* edgesLayout = ui->edgesLayout;
+    // Создаем layout для полей ввода и кнопки
+    auto title = new QLabel("Ребра:(введите цвета)");
+    edgesInputLayout = new QVBoxLayout;
+    for (int i = 0; i < n-1; ++i) {
+        std::string title = std::to_string(i+1)+"=====>" + std::to_string(i+2);
+        QLabel* title_i = new QLabel(QString::fromStdString(title));
+        QLineEdit* edge_i = new QLineEdit;
+        edgesInputLayout->addWidget(title_i);
+        edgesInputLayout->addWidget(edge_i);
+        colorInputFields.append(edge_i);
+    }
+    std::string title_0 = std::to_string(n)+"=====>" + std::to_string(1);
+    QLabel* title_i = new QLabel(QString::fromStdString(title_0));
+    QLineEdit* edge_i = new QLineEdit;
+    edgesInputLayout->addWidget(title_i);
+    edgesInputLayout->addWidget(edge_i);
+    colorInputFields.append(edge_i);
+    edgesLayout->addWidget(title);
+    // Добавляем layout с полями ввода в главный layout
+    edgesLayout->addLayout(edgesInputLayout);
 }
 
 void MainWindow::on_okButton_clicked() {
+    polygon.points.clear();
+    polygon.edges.clear();
+
     // Считываем данные из полей ввода и добавляем точки в полигон
     for (int i = 0; i < inputFields.size(); i += 2) {
         bool ok;
@@ -91,16 +127,53 @@ void MainWindow::on_okButton_clicked() {
             return;
         }
     }
-
-    // Скрываем layout с полями ввода
-    //inputLayout->setVisible(false);
     for (int i = 0; i < inputLayout->count(); ++i) {
         QWidget *widget = inputLayout->itemAt(i)->widget();
         if (widget) {
             widget->hide();
         }
     }
-    // Перерисовываем окно
+    for (int i = 0; i < points_num_layout->count(); ++i) {
+        QWidget *widget = points_num_layout->itemAt(i)->widget();
+        if (widget) {
+            widget->hide();
+        }
+    }
+    QHBoxLayout *innerLayout = points_num_layout->findChild<QHBoxLayout*>("n_ok_laytout");
+    for (int i = 0; i < innerLayout->count(); ++i) {
+        QWidget *widget = innerLayout->itemAt(i)->widget();
+        if (widget) {
+            widget->hide();
+        }
+    }
+    /*
+    for (int i = 0; i < colorInputFields.size(); i++) {
+        QString colorText = colorInputFields.at(i)->text();
+        QColor color;
+        color.setNamedColor(colorText);
+        if (color.isValid()) {
+            // Цвет успешно преобразован
+            polygon.edges[i].color = color;
+        } else {
+            // Некорректный ввод цвета
+            qDebug() << "Неверный формат цвета в поле №" << i+1;
+            // Можно добавить сообщение об ошибке для пользователя
+        }
+    }
+    for (int i = 0; i < edgesLayout->count(); ++i) {
+        QWidget *widget = edgesLayout->itemAt(i)->widget();
+        if (widget) {
+            widget->hide();
+        }
+    }
+    QHBoxLayout *inner2Layout = points_num_layout->findChild<QHBoxLayout*>("edgesInputLayout");
+    for (int i = 0; i < inner2Layout->count(); ++i) {
+        QWidget *widget = innerLayout->itemAt(i)->widget();
+        if (widget) {
+            widget->hide();
+        }
+    }
+    */
     drawPolygon();
     update();
     setMouseTracking(true);
@@ -118,25 +191,27 @@ void MainWindow::drawPolygon() {
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event) {
-    qDebug() << "mousePressEvent";
+
     if (event->button() == Qt::LeftButton) {
         int x = event->pos().x();
         int y = height() - event->pos().y();
         Point point(x,y);
-        qDebug() << "mousePressEvent";
-        for (int i = 0; i < inputLayout->count(); ++i) {
-            QWidget *widget = inputLayout->itemAt(i)->widget();
+        for (int i = 0; i < points_num_layout->count(); ++i) {
+            QWidget *widget = points_num_layout->itemAt(i)->widget();
             if (widget) {
                 widget->show();
             }
         }
-        for (int i = 0; i < inputLayout->count(); ++i) {
-            QWidget *widget = inputLayout->itemAt(i)->widget();
+        QHBoxLayout *innerLayout = points_num_layout->findChild<QHBoxLayout*>("n_ok_laytout");
+        for (int i = 0; i < innerLayout->count(); ++i) {
+            QWidget *widget = innerLayout->itemAt(i)->widget();
             if (widget) {
-                widget->hide();
+                widget->show();
             }
         }
         polygon.points.clear();
+        //showEdgesSettings();
+        //inputFields.clear();
         // Перерисовываем окно
         //drawPolygon();
         //update();
