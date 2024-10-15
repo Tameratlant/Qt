@@ -3,6 +3,7 @@
 
 #include <QList>
 #include <QPainter>
+#include <QDebug>
 #include "edge.h"
 #include "point.h"
 

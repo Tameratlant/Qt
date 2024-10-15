@@ -44,6 +44,8 @@ private:
     void n_okButton_clicked();
     void showInputFields();
     void showEdgesSettings();
+    void hideEdgesSettings();
+    void hideInputFields();
 };
 
 #endif // MAINWINDOW_H
