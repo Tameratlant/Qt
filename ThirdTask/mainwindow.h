@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QtGui>
+#include <QColor>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -31,13 +32,18 @@ private:
     QLineEdit* editN;
     QVBoxLayout* points_num_layout;
     Polygon polygon;
+    QList<QLineEdit*> colorInputFields;
     QList<QLineEdit*> inputFields; // Список для хранения указателей на поля ввода
     QVBoxLayout* inputLayout; // Указатель на layout с полями ввода
+    QVBoxLayout* edgesLayout;
+    QVBoxLayout *edgesInputLayout;
     void createInputFields();
     void mousePressEvent(QMouseEvent *event);
     void drawPolygon();
     void paintEvent(QPaintEvent *event);
     void n_okButton_clicked();
+    void showInputFields();
+    void showEdgesSettings();
 };
 
 #endif // MAINWINDOW_H
