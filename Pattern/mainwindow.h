@@ -6,9 +6,9 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QSlider>
-#include <QLabel>
 #include <QVBoxLayout>
 #include "canvas.h"
+#include "shape_types.h"
 
 class MainWindow : public QMainWindow
 {
@@ -19,17 +19,13 @@ public:
     ~MainWindow();
 
 private slots:
-    void selectTriangle();
-    void selectSquare();
-    void selectCircle();
+    void handleButtonClick(int index); // Слот для обработки нажатия кнопки
     void updateShapeParameters();
 
 private:
     Canvas *canvas;
     QToolBar *toolBar;
-    QPushButton *triangleButton;
-    QPushButton *squareButton;
-    QPushButton *circleButton;
+    QList<QPushButton*> shapeButtons; // Список кнопок для фигур
 
     QGroupBox *parametersGroupBox;
     QSlider *widthSlider;
@@ -37,6 +33,7 @@ private:
     QSlider *rotationSlider;
 
     void setupParametersGroupBox();
+    void createShapeButtons(); // Создание кнопок на основе enum
 };
 
 #endif // MAINWINDOW_H

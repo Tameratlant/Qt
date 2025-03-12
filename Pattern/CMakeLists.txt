@@ -39,6 +39,7 @@ else()
         add_executable(Pattern
             ${PROJECT_SOURCES}
             canvas.h canvas.cpp
+            shape_types.h shape_types.cpp
         )
     endif()
 endif()

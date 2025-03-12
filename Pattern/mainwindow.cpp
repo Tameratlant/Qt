@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "qlabel.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -7,22 +8,11 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(canvas);
 
     toolBar = new QToolBar(this);
-    addToolBar(Qt::RightToolBarArea, toolBar);
+    addToolBar(Qt::LeftToolBarArea, toolBar);
 
-    triangleButton = new QPushButton("Triangle", this);
-    squareButton = new QPushButton("Square", this);
-    circleButton = new QPushButton("Circle", this);
-
-    toolBar->addWidget(triangleButton);
-    toolBar->addWidget(squareButton);
-    toolBar->addWidget(circleButton);
-
+    createShapeButtons(); // Создаем кнопки для фигур
     setupParametersGroupBox(); // Настройка GroupBox с параметрами
     toolBar->addWidget(parametersGroupBox);
-
-    connect(triangleButton, &QPushButton::clicked, this, &MainWindow::selectTriangle);
-    connect(squareButton, &QPushButton::clicked, this, &MainWindow::selectSquare);
-    connect(circleButton, &QPushButton::clicked, this, &MainWindow::selectCircle);
 
     // Соединяем слайдеры с обновлением параметров
     connect(widthSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
@@ -34,27 +24,36 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::selectTriangle()
+void MainWindow::createShapeButtons()
 {
-    canvas->setShapeType(1); // 1 for Triangle
-    parametersGroupBox->setVisible(true); // Показываем GroupBox
+    // Получаем количество элементов в enum (исключая Unknown)
+    int shapeCount = static_cast<int>(ShapeType::Unknown);
+
+    for (int i = 0; i < shapeCount; ++i) {
+        ShapeType type = static_cast<ShapeType>(i);
+        QString buttonText = enum_to_string(type); // Название фигуры на кириллице
+
+        QPushButton *button = new QPushButton(buttonText, this);
+        shapeButtons.append(button);
+        toolBar->addWidget(button);
+
+        // Подключаем кнопку к слоту handleButtonClick с параметром (индекс кнопки)
+        connect(button, &QPushButton::clicked, this, [this, i]() { handleButtonClick(i); });
+    }
 }
 
-void MainWindow::selectSquare()
+void MainWindow::handleButtonClick(int index)
 {
-    canvas->setShapeType(2); // 2 for Square
+    // Преобразуем индекс в ShapeType
+    ShapeType type = static_cast<ShapeType>(index);
+    canvas->setShapeType(type); // Устанавливаем тип фигуры
     parametersGroupBox->setVisible(true); // Показываем GroupBox
-}
-
-void MainWindow::selectCircle()
-{
-    canvas->setShapeType(3); // 3 for Circle
-    parametersGroupBox->setVisible(true); // Показываем GroupBox
+    toolBar->updateGeometry(); // Обновляем геометрию тулбара
 }
 
 void MainWindow::setupParametersGroupBox()
 {
-    parametersGroupBox = new QGroupBox("Shape Parameters", this);
+    parametersGroupBox = new QGroupBox("Параметры фигуры", this);
     QVBoxLayout *layout = new QVBoxLayout;
 
     widthSlider = new QSlider(Qt::Horizontal, this);
@@ -69,11 +68,11 @@ void MainWindow::setupParametersGroupBox()
     rotationSlider->setRange(0, 360); // Угол поворота от 0 до 360 градусов
     rotationSlider->setValue(0); // Начальное значение
 
-    layout->addWidget(new QLabel("Width:"));
+    layout->addWidget(new QLabel("Ширина:"));
     layout->addWidget(widthSlider);
-    layout->addWidget(new QLabel("Height:"));
+    layout->addWidget(new QLabel("Высота:"));
     layout->addWidget(heightSlider);
-    layout->addWidget(new QLabel("Rotation:"));
+    layout->addWidget(new QLabel("Поворот:"));
     layout->addWidget(rotationSlider);
 
     parametersGroupBox->setLayout(layout);
