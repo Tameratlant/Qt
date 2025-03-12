@@ -1,0 +1,9 @@
+/home/tamerlan/Qt/Pattern/build/Desktop-Debug/CMakeFiles/Pattern.dir
+/home/tamerlan/Qt/Pattern/build/Desktop-Debug/CMakeFiles/edit_cache.dir
+/home/tamerlan/Qt/Pattern/build/Desktop-Debug/CMakeFiles/rebuild_cache.dir
+/home/tamerlan/Qt/Pattern/build/Desktop-Debug/CMakeFiles/list_install_components.dir
+/home/tamerlan/Qt/Pattern/build/Desktop-Debug/CMakeFiles/install.dir
+/home/tamerlan/Qt/Pattern/build/Desktop-Debug/CMakeFiles/install/local.dir
+/home/tamerlan/Qt/Pattern/build/Desktop-Debug/CMakeFiles/install/strip.dir
+/home/tamerlan/Qt/Pattern/build/Desktop-Debug/CMakeFiles/Pattern_autogen_timestamp_deps.dir
+/home/tamerlan/Qt/Pattern/build/Desktop-Debug/CMakeFiles/Pattern_autogen.dir
