@@ -5,9 +5,10 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QList>
+#include "shape_types.h" // Подключаем наш enum
 
 struct Shape {
-    int type; // Тип фигуры (1 - треугольник, 2 - квадрат, 3 - круг)
+    ShapeType type; // Тип фигуры (используем enum)
     QPointF position; // Позиция фигуры
     QSizeF size; // Размер фигуры
     int rotation; // Угол поворота
@@ -19,7 +20,7 @@ class Canvas : public QWidget
 
 public:
     explicit Canvas(QWidget *parent = nullptr);
-    void setShapeType(int type);
+    void setShapeType(ShapeType type); // Используем enum
     void setShapeSize(int width, int height);
     void setShapeRotation(int angle);
     void setActiveShape(int index); // Установить активную фигуру
@@ -29,7 +30,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    int currentShapeType; // Текущий тип фигуры
+    ShapeType currentShapeType; // Текущий тип фигуры (используем enum)
     QList<Shape> shapes; // Список всех фигур
     int activeShapeIndex; // Индекс активной фигуры
 

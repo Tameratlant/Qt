@@ -81,6 +81,14 @@ build CMakeFiles/Pattern.dir/canvas.cpp.o: CXX_COMPILER__Pattern_unscanned_Debug
   OBJECT_DIR = CMakeFiles/Pattern.dir
   OBJECT_FILE_DIR = CMakeFiles/Pattern.dir
 
+build CMakeFiles/Pattern.dir/shape_types.cpp.o: CXX_COMPILER__Pattern_unscanned_Debug /home/tamerlan/Qt/Pattern/shape_types.cpp || cmake_object_order_depends_target_Pattern
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Pattern.dir/shape_types.cpp.o.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I/home/tamerlan/Qt/Pattern/build/Desktop-Debug/Pattern_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = CMakeFiles/Pattern.dir
+  OBJECT_FILE_DIR = CMakeFiles/Pattern.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Pattern
@@ -89,7 +97,7 @@ build CMakeFiles/Pattern.dir/canvas.cpp.o: CXX_COMPILER__Pattern_unscanned_Debug
 #############################################
 # Link the executable Pattern
 
-build Pattern: CXX_EXECUTABLE_LINKER__Pattern_Debug CMakeFiles/Pattern.dir/Pattern_autogen/mocs_compilation.cpp.o CMakeFiles/Pattern.dir/main.cpp.o CMakeFiles/Pattern.dir/mainwindow.cpp.o CMakeFiles/Pattern.dir/canvas.cpp.o | /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13 /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.13 /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13 || Pattern_autogen Pattern_autogen_timestamp_deps
+build Pattern: CXX_EXECUTABLE_LINKER__Pattern_Debug CMakeFiles/Pattern.dir/Pattern_autogen/mocs_compilation.cpp.o CMakeFiles/Pattern.dir/main.cpp.o CMakeFiles/Pattern.dir/mainwindow.cpp.o CMakeFiles/Pattern.dir/canvas.cpp.o CMakeFiles/Pattern.dir/shape_types.cpp.o | /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13 /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.13 /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13 || Pattern_autogen Pattern_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.13  /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.13  /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.13
   OBJECT_DIR = CMakeFiles/Pattern.dir

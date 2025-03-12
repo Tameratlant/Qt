@@ -1,5 +1,6 @@
 /home/tamerlan/Qt/Pattern/build/Desktop-Debug/Pattern_autogen/EWIEGA46WW/moc_canvas.cpp: /home/tamerlan/Qt/Pattern/canvas.h \
   /home/tamerlan/Qt/Pattern/build/Desktop-Debug/Pattern_autogen/moc_predefs.h \
+  /home/tamerlan/Qt/Pattern/shape_types.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
   /usr/include/assert.h \
@@ -246,6 +247,7 @@
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/QList \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qalgorithms.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qarraydata.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic.h \
