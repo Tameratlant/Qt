@@ -23,3 +23,10 @@
 107	2144	1742148974598211052	CMakeFiles/Pattern.dir/settings.cpp.o	c4cb063d412391db
 102	2487	1742148975049211062	CMakeFiles/Pattern.dir/mainwindow.cpp.o	2d4ff42683a7b96d
 2487	2872	1742148975430211070	Pattern	5ed7871181c5f9b4
+5	452	1742151237438004350	Pattern_autogen/timestamp	e77dd8acd0e6e6e3
+5	452	1742151237438004350	Pattern_autogen/mocs_compilation.cpp	e77dd8acd0e6e6e3
+5	452	1742151237438004350	/home/tamerlan/Qt/Pattern/build/Desktop-Debug/Pattern_autogen/timestamp	e77dd8acd0e6e6e3
+5	452	1742151237438004350	/home/tamerlan/Qt/Pattern/build/Desktop-Debug/Pattern_autogen/mocs_compilation.cpp	e77dd8acd0e6e6e3
+452	4370	1742151240749004424	CMakeFiles/Pattern.dir/Pattern_autogen/mocs_compilation.cpp.o	f44b7379db658a2c
+454	4537	1742151241222004435	CMakeFiles/Pattern.dir/main.cpp.o	a0c2445dd8dbb995
+457	4537	1742151241506004441	CMakeFiles/Pattern.dir/mainwindow.cpp.o	2d4ff42683a7b96d

@@ -19,5 +19,5 @@ struct settings{
 
     settings() = default;
 
-    QVBoxLayout get_layout();
+    QVBoxLayout *get_layout();
 };
