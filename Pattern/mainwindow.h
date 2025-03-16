@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QSlider>
-#include <QLineEdit>>
+#include <QLineEdit>
 #include <QVBoxLayout>
 #include "canvas.h"
 #include "shape_types.h"
