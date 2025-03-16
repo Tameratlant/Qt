@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QSlider>
+#include <QLineEdit>>
 #include <QVBoxLayout>
 #include "canvas.h"
 #include "shape_types.h"
@@ -33,8 +34,10 @@ private:
     QList<QPushButton*> shapeButtons; // Список кнопок для фигур
 
     QGroupBox *parametersGroupBox;
-    QSlider *widthSlider;
-    QSlider *lenghttSlider;
+    QLineEdit *width_line;
+    QLineEdit *lenght_line;
+    QLineEdit *eleptic_a_line;
+    QLineEdit *eleptic_e_line;
     QSlider *rotationSlider;
 
     void setupParametersGroupBox(ShapeType type);
