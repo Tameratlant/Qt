@@ -44,6 +44,7 @@ else()
             ../../point.h
             point.h
             settings.h
+            settings.cpp
         )
     endif()
 endif()

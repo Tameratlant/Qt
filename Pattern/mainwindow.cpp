@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "qlabel.h"
 #include "ui_mainwindow.h"
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -60,31 +61,31 @@ void MainWindow::setupParametersGroupBox(ShapeType type)
     QVBoxLayout *layout = new QVBoxLayout;
 
     if (type == ShapeType::simple_fissure) {
-        widthSlider = new QSlider(Qt::Horizontal, this);
-        widthSlider->setRange(10, 500); // Минимальная и максимальная ширина
-        widthSlider->setValue(100); // Начальное значение
 
-        lenghttSlider = new QSlider(Qt::Horizontal, this);
-        lenghttSlider->setRange(10, 500); // Минимальная и максимальная высота
-        lenghttSlider->setValue(100); // Начальное значение
+        width_line = new QLineEdit(this);
+        //width_line->setRange(10, 500); // Минимальная и максимальная ширина
+        //width_line->setValue(100); // Начальное значение
+
+        lenght_line = new QLineEdit(this);
+
 
         rotationSlider = new QSlider(Qt::Horizontal, this);
         rotationSlider->setRange(0, 360); // Угол поворота от 0 до 360 градусов
         rotationSlider->setValue(0); // Начальное значение
 
         layout->addWidget(new QLabel("Ширина:"));
-        layout->addWidget(widthSlider);
-        layout->addWidget(new QLabel("Высота:"));
-        layout->addWidget(lenghttSlider);
+        layout->addWidget(width_line);
+        layout->addWidget(new QLabel("Длина:"));
+        layout->addWidget(lenght_line);
         layout->addWidget(new QLabel("Поворот:"));
         layout->addWidget(rotationSlider);
 
         // Соединяем слайдеры с обновлением параметров
-        connect(widthSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
-        connect(lenghttSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
+        connect(width_line, &QLineEdit::textChanged, this, &MainWindow::updateShapeParameters);
+        connect(lenght_line, &QLineEdit::textChanged, this, &MainWindow::updateShapeParameters);
         connect(rotationSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
     }
-
+/*
     if (type == ShapeType::thin_fissure)
     {
 
@@ -105,6 +106,7 @@ void MainWindow::setupParametersGroupBox(ShapeType type)
         connect(lenghttSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
         connect(rotationSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
     }
+*/
 
 
 
@@ -117,10 +119,30 @@ void MainWindow::setupParametersGroupBox(ShapeType type)
 
 }
 
+// Считываем данные из полей ввода и добавляем точки в полигон
+
+
 void MainWindow::updateShapeParameters()
 {
-    int width = widthSlider->value();
-    int lenght = lenghttSlider->value();
+    bool ok;
+    int width, lenght;
+    int tmp = width_line->text().toInt(&ok);
+    if (ok) {
+        width = tmp;
+    } else {
+        QMessageBox::warning(this, "Ошибка", "Некорректный ввод");
+        return;
+    }
+
+    tmp = lenght_line->text().toInt(&ok);
+    if (ok) {
+        lenght = tmp;
+    } else {
+        QMessageBox::warning(this, "Ошибка", "Некорректный ввод");
+        return;
+    }
+
+
     int rotation = rotationSlider->value();
 
     canvas->setShapeSize(width, lenght);
