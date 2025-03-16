@@ -1,23 +1,22 @@
 #include "mainwindow.h"
 #include "qlabel.h"
+#include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent),
+    ui(new Ui::MainWindow)
 {
     canvas = new Canvas(this);
     setCentralWidget(canvas);
 
     toolBar = new QToolBar(this);
-    addToolBar(Qt::LeftToolBarArea, toolBar);
+    addToolBar(Qt::RightToolBarArea, toolBar);
 
     createShapeButtons(); // Создаем кнопки для фигур
-    setupParametersGroupBox(); // Настройка GroupBox с параметрами
+    setupParametersGroupBox(ShapeType::unknown); // Настройка GroupBox с параметрами
     toolBar->addWidget(parametersGroupBox);
 
-    // Соединяем слайдеры с обновлением параметров
-    connect(widthSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
-    connect(heightSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
-    connect(rotationSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
+
 }
 
 MainWindow::~MainWindow()
@@ -27,7 +26,7 @@ MainWindow::~MainWindow()
 void MainWindow::createShapeButtons()
 {
     // Получаем количество элементов в enum (исключая Unknown)
-    int shapeCount = static_cast<int>(ShapeType::Unknown);
+    int shapeCount = static_cast<int>(ShapeType::unknown);
 
     for (int i = 0; i < shapeCount; ++i) {
         ShapeType type = static_cast<ShapeType>(i);
@@ -45,17 +44,21 @@ void MainWindow::createShapeButtons()
 void MainWindow::handleButtonClick(int index)
 {
     // Преобразуем индекс в ShapeType
+    setupParametersGroupBox(ShapeType::unknown);
     ShapeType type = static_cast<ShapeType>(index);
     canvas->setShapeType(type); // Устанавливаем тип фигуры
     parametersGroupBox->setVisible(true); // Показываем GroupBox
     toolBar->updateGeometry(); // Обновляем геометрию тулбара
 }
 
-void MainWindow::setupParametersGroupBox()
+void MainWindow::setupParametersGroupBox(ShapeType type)
 {
-    parametersGroupBox = new QGroupBox("Параметры фигуры", this);
+    parametersGroupBox =new QGroupBox("Параметры ", this);
+    parametersGroupBox->setGeometry(800, 120, 100, 300);
+        //ui->figure_settings;//
     QVBoxLayout *layout = new QVBoxLayout;
 
+    //if (type == ShapeType)
     widthSlider = new QSlider(Qt::Horizontal, this);
     widthSlider->setRange(10, 500); // Минимальная и максимальная ширина
     widthSlider->setValue(100); // Начальное значение
@@ -76,7 +79,12 @@ void MainWindow::setupParametersGroupBox()
     layout->addWidget(rotationSlider);
 
     parametersGroupBox->setLayout(layout);
-    parametersGroupBox->setVisible(true); // По умолчанию скрыт
+    parametersGroupBox->setVisible(false); // По умолчанию скрыт
+
+    // Соединяем слайдеры с обновлением параметров
+    connect(widthSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
+    connect(heightSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
+    connect(rotationSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
 }
 
 void MainWindow::updateShapeParameters()

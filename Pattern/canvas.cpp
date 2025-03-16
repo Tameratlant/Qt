@@ -1,7 +1,7 @@
 #include "canvas.h"
 #include <QPainter>
 
-Canvas::Canvas(QWidget *parent) : QWidget(parent), currentShapeType(ShapeType::Unknown), activeShapeIndex(-1)
+Canvas::Canvas(QWidget *parent) : QWidget(parent), currentShapeType(ShapeType::unknown), activeShapeIndex(-1)
 {
     setFixedSize(800, 600);
 }
@@ -53,7 +53,7 @@ void Canvas::paintEvent(QPaintEvent *event)
 
 void Canvas::mousePressEvent(QMouseEvent *event)
 {
-    if (currentShapeType == ShapeType::Unknown) return; // Если фигура не выбрана, ничего не делаем
+    if (currentShapeType == ShapeType::unknown) return; // Если фигура не выбрана, ничего не делаем
 
     // Создаем новую фигуру и добавляем ее в список
     Shape newShape;
@@ -74,15 +74,15 @@ void Canvas::drawShape(QPainter &painter, const Shape &shape)
     painter.rotate(shape.rotation); // Применяем поворот
 
     switch (shape.type) {
-    case ShapeType::Triangle: // Треугольник
+    case ShapeType::eleptic_pore: // Треугольник
         painter.drawLine(-shape.size.width() / 2, shape.size.height() / 2, 0, -shape.size.height() / 2);
         painter.drawLine(0, -shape.size.height() / 2, shape.size.width() / 2, shape.size.height() / 2);
         painter.drawLine(shape.size.width() / 2, shape.size.height() / 2, -shape.size.width() / 2, shape.size.height() / 2);
         break;
-    case ShapeType::Square: // Квадрат
+    case ShapeType::simple_fissure: // Квадрат
         painter.drawRect(-shape.size.width() / 2, -shape.size.height() / 2, shape.size.width(), shape.size.height());
         break;
-    case ShapeType::Circle: // Круг
+    case ShapeType::thin_fissure: // Круг
         painter.drawEllipse(QPointF(0, 0), shape.size.width() / 2, shape.size.height() / 2);
         break;
     default:

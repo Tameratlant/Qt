@@ -2,11 +2,13 @@
 
 QString enum_to_string(ShapeType type) {
     switch (type) {
-    case ShapeType::Triangle:
-        return "Треугольник";
-    case ShapeType::Square:
+    case ShapeType::eleptic_pore:
+        return "Элиптическая пора";
+    case ShapeType::custom_pore:
         return "Квадрат";
-    case ShapeType::Circle:
+    case ShapeType::simple_fissure:
+        return "Круг";
+    case ShapeType::thin_fissure:
         return "Круг";
     default:
         return "Неизвестная фигура";

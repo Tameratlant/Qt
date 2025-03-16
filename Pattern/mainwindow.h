@@ -10,6 +10,10 @@
 #include "canvas.h"
 #include "shape_types.h"
 
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -23,6 +27,7 @@ private slots:
     void updateShapeParameters();
 
 private:
+    Ui::MainWindow *ui;
     Canvas *canvas;
     QToolBar *toolBar;
     QList<QPushButton*> shapeButtons; // Список кнопок для фигур
@@ -32,7 +37,7 @@ private:
     QSlider *heightSlider;
     QSlider *rotationSlider;
 
-    void setupParametersGroupBox();
+    void setupParametersGroupBox(ShapeType type);
     void createShapeButtons(); // Создание кнопок на основе enum
 };
 

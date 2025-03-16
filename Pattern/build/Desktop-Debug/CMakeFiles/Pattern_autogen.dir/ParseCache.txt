@@ -2,6 +2,7 @@
 /home/tamerlan/Qt/Pattern/shape_types.cpp
 /home/tamerlan/Qt/Pattern/shape_types.h
 /home/tamerlan/Qt/Pattern/mainwindow.cpp
+ uic:ui_mainwindow.h
 /home/tamerlan/Qt/Pattern/main.cpp
 /home/tamerlan/Qt/Pattern/canvas.cpp
 /home/tamerlan/Qt/Pattern/mainwindow.h
@@ -739,3 +740,6 @@
  mdp:/usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h
  mdp:/usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
  mdp:/usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
+/home/tamerlan/point.h
+/home/tamerlan/Qt/Pattern/point.h
+/home/tamerlan/Qt/Pattern/settings.h
