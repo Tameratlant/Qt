@@ -34,7 +34,7 @@ private:
 
     QGroupBox *parametersGroupBox;
     QSlider *widthSlider;
-    QSlider *heightSlider;
+    QSlider *lenghttSlider;
     QSlider *rotationSlider;
 
     void setupParametersGroupBox(ShapeType type);

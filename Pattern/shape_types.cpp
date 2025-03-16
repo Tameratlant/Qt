@@ -5,11 +5,11 @@ QString enum_to_string(ShapeType type) {
     case ShapeType::eleptic_pore:
         return "Элиптическая пора";
     case ShapeType::custom_pore:
-        return "Квадрат";
+        return "Кастомная пора";
     case ShapeType::simple_fissure:
-        return "Круг";
+        return "Трещина";
     case ShapeType::thin_fissure:
-        return "Круг";
+        return "Тонкая трещина";
     default:
         return "Неизвестная фигура";
     }
