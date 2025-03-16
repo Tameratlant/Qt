@@ -40,6 +40,10 @@ else()
             ${PROJECT_SOURCES}
             canvas.h canvas.cpp
             shape_types.h shape_types.cpp
+
+            ../../point.h
+            point.h
+            settings.h
         )
     endif()
 endif()

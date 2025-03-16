@@ -9,8 +9,12 @@ Pattern_autogen/timestamp: \
   /home/tamerlan/Qt/Pattern/main.cpp \
   /home/tamerlan/Qt/Pattern/mainwindow.cpp \
   /home/tamerlan/Qt/Pattern/mainwindow.h \
+  /home/tamerlan/Qt/Pattern/mainwindow.ui \
+  /home/tamerlan/Qt/Pattern/point.h \
+  /home/tamerlan/Qt/Pattern/settings.h \
   /home/tamerlan/Qt/Pattern/shape_types.cpp \
   /home/tamerlan/Qt/Pattern/shape_types.h \
+  /home/tamerlan/point.h \
   /usr/bin/cmake \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \

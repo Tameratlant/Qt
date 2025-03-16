@@ -88,11 +88,24 @@
 			null
 		],
 		[
+			"/home/tamerlan/Qt/Pattern/point.h",
+			"MU",
+			"EWIEGA46WW/moc_point.cpp",
+			null
+		],
+		[
+			"/home/tamerlan/Qt/Pattern/settings.h",
+			"MU",
+			"EWIEGA46WW/moc_settings.cpp",
+			null
+		],
+		[
 			"/home/tamerlan/Qt/Pattern/shape_types.h",
 			"MU",
 			"EWIEGA46WW/moc_shape_types.cpp",
 			null
-		]
+		],
+		[ "/home/tamerlan/point.h", "MU", "3MAS6REY7F/moc_point.cpp", null ]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/tamerlan/Qt/Pattern/build/Desktop-Debug/Pattern_autogen/include",
