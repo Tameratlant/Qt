@@ -25,6 +25,7 @@ public:
     void setShapeRotation(int angle);
     void setActiveShape(int index); // Установить активную фигуру
 
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
@@ -34,6 +35,7 @@ private:
     QList<Shape> shapes; // Список всех фигур
     int activeShapeIndex; // Индекс активной фигуры
 
+    QSizeF getDefaultSize(ShapeType type);
     void drawShape(QPainter &painter, const Shape &shape);
 };
 

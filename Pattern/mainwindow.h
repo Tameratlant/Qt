@@ -25,7 +25,7 @@ public:
 
 private slots:
     void handleButtonClick(int index); // Слот для обработки нажатия кнопки
-    void updateShapeParameters();
+    void updateShapeParameters(ShapeType type);
 
 private:
     Ui::MainWindow *ui;

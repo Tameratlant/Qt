@@ -51,6 +51,20 @@ void Canvas::paintEvent(QPaintEvent *event)
     }
 }
 
+QSizeF Canvas::getDefaultSize(ShapeType type)
+{
+    switch (type) {
+    case ShapeType::eleptic_pore:
+        return QSizeF(30, 10);
+    case ShapeType::simple_fissure:
+        return QSizeF(2, 200);
+    case ShapeType::thin_fissure:
+        return QSizeF(0, 200);
+    default:
+        return QSizeF(100, 100);
+    }
+}
+
 void Canvas::mousePressEvent(QMouseEvent *event)
 {
     if (currentShapeType == ShapeType::unknown) return; // Если фигура не выбрана, ничего не делаем
@@ -59,8 +73,9 @@ void Canvas::mousePressEvent(QMouseEvent *event)
     Shape newShape;
     newShape.type = currentShapeType;
     newShape.position = event->pos();
-    newShape.size = QSizeF(100, 100); // Начальный размер
-    newShape.rotation = 0; // Начальный угол поворота
+    //newShape.size = QSizeF(100, 100);
+    newShape.size = getDefaultSize(newShape.type);
+    newShape.rotation = 0;
 
     shapes.append(newShape);
     activeShapeIndex = shapes.size() - 1; // Делаем новую фигуру активной
@@ -69,21 +84,19 @@ void Canvas::mousePressEvent(QMouseEvent *event)
 
 void Canvas::drawShape(QPainter &painter, const Shape &shape)
 {
-    painter.save(); // Сохраняем текущее состояние painter
-    painter.translate(shape.position); // Перемещаем начало координат в позицию фигуры
-    painter.rotate(shape.rotation); // Применяем поворот
+    painter.save();
+    painter.translate(shape.position);
+    painter.rotate(shape.rotation);
 
     switch (shape.type) {
-    case ShapeType::eleptic_pore: // Треугольник
-        painter.drawLine(-shape.size.width() / 2, shape.size.height() / 2, 0, -shape.size.height() / 2);
-        painter.drawLine(0, -shape.size.height() / 2, shape.size.width() / 2, shape.size.height() / 2);
-        painter.drawLine(shape.size.width() / 2, shape.size.height() / 2, -shape.size.width() / 2, shape.size.height() / 2);
+    case ShapeType::eleptic_pore:
+        painter.drawEllipse(QPointF(0, 0), shape.size.width() / 2, shape.size.height() / 2);
         break;
-    case ShapeType::simple_fissure: // Квадрат
+    case ShapeType::simple_fissure:
         painter.drawRect(-shape.size.width() / 2, -shape.size.height() / 2, shape.size.width(), shape.size.height());
         break;
-    case ShapeType::thin_fissure: // Круг
-        painter.drawEllipse(QPointF(0, 0), shape.size.width() / 2, shape.size.height() / 2);
+    case ShapeType::thin_fissure:
+        painter.drawRect(-shape.size.width() / 2, -shape.size.height() / 2, shape.size.width(), shape.size.height());
         break;
     default:
         break;
