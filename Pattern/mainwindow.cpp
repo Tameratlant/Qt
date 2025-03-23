@@ -63,29 +63,51 @@ void MainWindow::setupParametersGroupBox(ShapeType type)
     if (type == ShapeType::simple_fissure) {
 
         width_line = new QLineEdit(this);
-        //width_line->setRange(10, 500); // Минимальная и максимальная ширина
-        //width_line->setValue(100); // Начальное значение
-
         lenght_line = new QLineEdit(this);
-
-
-        rotationSlider = new QSlider(Qt::Horizontal, this);
-        rotationSlider->setRange(0, 360); // Угол поворота от 0 до 360 градусов
-        rotationSlider->setValue(0); // Начальное значение
-
         layout->addWidget(new QLabel("Ширина:"));
         layout->addWidget(width_line);
         layout->addWidget(new QLabel("Длина:"));
         layout->addWidget(lenght_line);
-        layout->addWidget(new QLabel("Поворот:"));
-        layout->addWidget(rotationSlider);
 
         // Соединяем слайдеры с обновлением параметров
-        connect(width_line, &QLineEdit::textChanged, this, &MainWindow::updateShapeParameters);
-        connect(lenght_line, &QLineEdit::textChanged, this, &MainWindow::updateShapeParameters);
-        connect(rotationSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
+
+        connect(width_line, &QLineEdit::textChanged, this, [this, type]() { MainWindow::updateShapeParameters(type); });
+        connect(lenght_line, &QLineEdit::textChanged, this, [this, type]() { MainWindow::updateShapeParameters(type); });
+
     }
-/*
+    else if (type == ShapeType::thin_fissure) {
+
+        width_line = nullptr;
+        lenght_line = new QLineEdit(this);
+
+        layout->addWidget(new QLabel("Длина:"));
+        layout->addWidget(lenght_line);
+
+
+        // Соединяем слайдеры с обновлением параметров
+        connect(lenght_line, &QLineEdit::textChanged, this, [this, type]() { MainWindow::updateShapeParameters(type); });
+    }
+    else if (type == ShapeType::eleptic_pore) {
+
+
+        width_line = new QLineEdit(this);
+        lenght_line = new QLineEdit(this);
+
+        layout->addWidget(new QLabel("Малая полуось:"));
+        layout->addWidget(width_line);
+        layout->addWidget(new QLabel("Большая полуось:"));
+        layout->addWidget(lenght_line);
+
+        // Соединяем слайдеры с обновлением параметров
+        connect(lenght_line, &QLineEdit::textChanged, this, [this, type]() { MainWindow::updateShapeParameters(type); });
+    }
+    rotationSlider = new QSlider(Qt::Horizontal, this);
+    rotationSlider->setRange(0, 360); // Угол поворота от 0 до 360 градусов
+    rotationSlider->setValue(0); // Начальное значение
+    connect(rotationSlider, &QSlider::valueChanged, this, [this, type]() { MainWindow::updateShapeParameters(type); });
+    layout->addWidget(new QLabel("Поворот:"));
+    layout->addWidget(rotationSlider);
+    /*
     if (type == ShapeType::thin_fissure)
     {
 
@@ -107,12 +129,6 @@ void MainWindow::setupParametersGroupBox(ShapeType type)
         connect(rotationSlider, &QSlider::valueChanged, this, &MainWindow::updateShapeParameters);
     }
 */
-
-
-
-
-
-
     parametersGroupBox->setLayout(layout);
     parametersGroupBox->setVisible(false); // По умолчанию скрыт
 
@@ -122,19 +138,12 @@ void MainWindow::setupParametersGroupBox(ShapeType type)
 // Считываем данные из полей ввода и добавляем точки в полигон
 
 
-void MainWindow::updateShapeParameters()
+void MainWindow::updateShapeParameters(ShapeType type)
 {
-    bool ok;
+    bool ok = 1;
     int width, lenght;
-    int tmp = width_line->text().toInt(&ok);
-    if (ok) {
-        width = tmp;
-    } else {
-        QMessageBox::warning(this, "Ошибка", "Некорректный ввод");
-        return;
-    }
-
-    tmp = lenght_line->text().toInt(&ok);
+    /*
+    int tmp = lenght_line->text().toInt(&ok);
     if (ok) {
         lenght = tmp;
     } else {
@@ -142,6 +151,23 @@ void MainWindow::updateShapeParameters()
         return;
     }
 
+    if (type != ShapeType::thin_fissure)
+    {
+        tmp = width_line->text().toInt(&ok);
+        if (ok) {
+            width = tmp;
+        } else {
+            QMessageBox::warning(this, "Ошибка", "Некорректный ввод");
+            return;
+        }
+    }
+    */
+
+    lenght = lenght_line->text().toInt(&ok);
+    if (type != ShapeType::thin_fissure)
+        width = width_line->text().toInt(&ok);
+    else
+        width = 1;
 
     int rotation = rotationSlider->value();
 
