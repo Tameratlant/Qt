@@ -24,24 +24,26 @@ public:
     ~MainWindow();
 
 private slots:
-    void handleButtonClick(int index); // Слот для обработки нажатия кнопки
+    void handleButtonClick(int index);
     void updateShapeParameters(ShapeType type);
 
 private:
     Ui::MainWindow *ui;
     Canvas *canvas;
     QToolBar *toolBar;
-    QList<QPushButton*> shapeButtons; // Список кнопок для фигур
+    QList<QPushButton*> shapeButtons;
 
     QGroupBox *parametersGroupBox;
     QLineEdit *width_line;
     QLineEdit *lenght_line;
+    QLineEdit *pos_x_line;
+    QLineEdit *pos_y_line;
     QLineEdit *eleptic_a_line;
     QLineEdit *eleptic_e_line;
     QSlider *rotationSlider;
 
     void setupParametersGroupBox(ShapeType type);
-    void createShapeButtons(); // Создание кнопок на основе enum
+    void createShapeButtons();
 };
 
 #endif // MAINWINDOW_H
