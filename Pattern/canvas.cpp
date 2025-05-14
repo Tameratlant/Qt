@@ -27,6 +27,14 @@ void Canvas::setShapeRotation(int angle)
     }
 }
 
+void Canvas::setPos(QPoint pos)
+{
+    if (activeShapeIndex != -1 && activeShapeIndex < shapes.size()) {
+        shapes[activeShapeIndex].position = pos;
+        update();
+    }
+}
+
 void Canvas::setActiveShape(int index)
 {
     if (index >= 0 && index < shapes.size()) {
@@ -40,12 +48,11 @@ void Canvas::paintEvent(QPaintEvent *event)
     Q_UNUSED(event);
     QPainter painter(this);
 
-    // Рисуем все фигуры из списка
     for (int i = 0; i < shapes.size(); ++i) {
         if (i == activeShapeIndex) {
-            painter.setPen(Qt::red); // Активная фигура выделяется красным цветом
+            painter.setPen(Qt::red);
         } else {
-            painter.setPen(Qt::black); // Остальные фигуры черным
+            painter.setPen(Qt::black);
         }
         drawShape(painter, shapes[i]);
     }
@@ -67,19 +74,28 @@ QSizeF Canvas::getDefaultSize(ShapeType type)
 
 void Canvas::mousePressEvent(QMouseEvent *event)
 {
-    if (currentShapeType == ShapeType::unknown) return; // Если фигура не выбрана, ничего не делаем
+    /*
+    if (currentShapeType == ShapeType::unknown)
+    {
+        for (auto &shape : shapes) {
+            if (shape->contains(event->pos())) {
+                selectedShape = shape;
+                emit shapeSelected(true);
+                update();
+                break;
+            }
+        }
+    }*/
 
-    // Создаем новую фигуру и добавляем ее в список
     Shape newShape;
     newShape.type = currentShapeType;
     newShape.position = event->pos();
-    //newShape.size = QSizeF(100, 100);
     newShape.size = getDefaultSize(newShape.type);
     newShape.rotation = 0;
 
     shapes.append(newShape);
-    activeShapeIndex = shapes.size() - 1; // Делаем новую фигуру активной
-    update(); // Перерисовываем холст
+    activeShapeIndex = shapes.size() - 1;
+    update();
 }
 
 void Canvas::drawShape(QPainter &painter, const Shape &shape)
@@ -102,5 +118,5 @@ void Canvas::drawShape(QPainter &painter, const Shape &shape)
         break;
     }
 
-    painter.restore(); // Восстанавливаем состояние painter
+    painter.restore();
 }

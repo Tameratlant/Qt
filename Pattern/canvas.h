@@ -23,6 +23,7 @@ public:
     void setShapeType(ShapeType type); // Используем enum
     void setShapeSize(int width, int height);
     void setShapeRotation(int angle);
+    void setPos(QPoint pos);
     void setActiveShape(int index); // Установить активную фигуру
 
 
