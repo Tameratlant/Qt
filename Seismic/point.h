@@ -1,17 +1,9 @@
-#ifndef POINT_H
-#define POINT_H
+#pragma once
 #include <QPoint>
 
 class Point : public QPoint {
-
 public:
-
-    //std::shared_ptr<Edge> left;
-    //std::shared_ptr<Edge> right;
-
     Point() : QPoint() {} // Конструктор по умолчанию
     Point(int x, int y) : QPoint(x, y) {} // Конструктор с координатами
-
+    Point(QPoint otherPoint) : Point(otherPoint.x (), otherPoint.y ()) {}
 };
-
-#endif // POINT_H

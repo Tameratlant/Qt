@@ -1,11 +1,11 @@
-#ifndef CANVAS_H
-#define CANVAS_H
+#pragma once
 
 #include <QWidget>
 #include <QPainter>
 #include <QMouseEvent>
 #include <QList>
-#include "shape_types.h" // Подключаем наш enum
+#include "polygon.h"
+#include "shape_types.h"
 
 struct Shape {
     ShapeType type; // Тип фигуры (используем enum)
@@ -32,12 +32,12 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
+    void convertQShapeToPolygon ();
     ShapeType currentShapeType; // Текущий тип фигуры (используем enum)
     QList<Shape> shapes; // Список всех фигур
+    QList<Polygon> Pshapes; // Список всех фигур в виде полигонов
     int activeShapeIndex; // Индекс активной фигуры
 
     QSizeF getDefaultSize(ShapeType type);
     void drawShape(QPainter &painter, const Shape &shape);
 };
-
-#endif // CANVAS_H

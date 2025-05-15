@@ -19,6 +19,13 @@ void Polygon::draw(QPainter &painter) {
 }
 */
 
+Polygon::Polygon(QList<Point>)
+{
+  for (auto& point : points)
+      addPoint(point);
+  reorderPoints ();
+}
+
 void Polygon::draw(QPainter &painter) {
     // Проходим по всем ребрам
     for (const auto &edge : this->edges) {

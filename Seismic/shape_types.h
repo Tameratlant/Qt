@@ -11,6 +11,8 @@ enum class ShapeType {
     unknown   // Неизвестный тип (для обработки ошибок)
 };
 
+int get_num_of_point_to_approx(ShapeType shape);
+
 QString enum_to_string(ShapeType type);
 
 #endif // SHAPE_TYPES_H

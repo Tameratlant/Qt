@@ -1,5 +1,7 @@
 #include "canvas.h"
 #include <QPainter>
+#include "polygon.h"
+#include <QtMath>
 
 Canvas::Canvas(QWidget *parent) : QWidget(parent), currentShapeType(ShapeType::unknown), activeShapeIndex(-1)
 {
@@ -9,6 +11,88 @@ Canvas::Canvas(QWidget *parent) : QWidget(parent), currentShapeType(ShapeType::u
 void Canvas::setShapeType(ShapeType type)
 {
     currentShapeType = type;
+}
+
+QList<Point> shapeUpdate(Shape shape)
+{
+    QList<Point> points;
+    int pointCount;
+    const qreal centerX = shape.position.x();
+    const qreal centerY = shape.position.y();
+    const qreal halfWidth = shape.size.width() / 2.0;
+    const qreal halfHeight = shape.size.height() / 2.0;
+    const qreal angleRad = qDegreesToRadians(static_cast<qreal>(shape.rotation));
+
+    auto rotatePoint = [&](qreal x, qreal y) -> QPoint {
+        // Перенос в начало координат, поворот и обратный перенос
+        qreal rotatedX = centerX + (x * qCos(angleRad) - y * qSin(angleRad));
+        qreal rotatedY = centerY + (x * qSin(angleRad) + y * qCos(angleRad));
+        return QPoint(rotatedX, rotatedY);
+    };
+
+    switch (shape.type) {
+    case ShapeType::eleptic_pore: {
+        pointCount = get_num_of_point_to_approx(shape.type);
+        for (int i = 0; i < pointCount; ++i) {
+            qreal angle = 2 * M_PI * i / pointCount;
+            qreal x = halfWidth * qCos(angle);
+            qreal y = halfHeight * qSin(angle);
+            points.append(rotatePoint(x, y));
+        }
+        break;
+    }
+    case ShapeType::simple_fissure: {
+        pointCount = get_num_of_point_to_approx(shape.type);
+        int pointsPerSide = pointCount / 4;
+        if (pointsPerSide < 1) pointsPerSide = 1;
+
+        for (int i = 0; i < pointsPerSide; ++i) {
+            qreal x = -halfWidth + (2 * halfWidth * i) / (pointsPerSide - 1);
+            qreal y = -halfHeight;
+            points.append(rotatePoint(x, y));
+        }
+
+        for (int i = 1; i < pointsPerSide; ++i) {
+            qreal x = halfWidth;
+            qreal y = -halfHeight + (2 * halfHeight * i) / (pointsPerSide - 1);
+            points.append(rotatePoint(x, y));
+        }
+
+        for (int i = 1; i < pointsPerSide; ++i) {
+            qreal x = halfWidth - (2 * halfWidth * i) / (pointsPerSide - 1);
+            qreal y = halfHeight;
+            points.append(rotatePoint(x, y));
+        }
+
+        for (int i = 1; i < pointsPerSide - 1; ++i) {
+            qreal x = -halfWidth;
+            qreal y = halfHeight - (2 * halfHeight * i) / (pointsPerSide - 1);
+            points.append(rotatePoint(x, y));
+        }
+        return points;
+    }
+    case ShapeType::thin_fissure: {
+        qreal x1 = -halfWidth;
+        qreal y1 = 0;
+        qreal x2 = halfWidth;
+        qreal y2 = 0;
+        points.append(rotatePoint(x1, y1));
+        points.append(rotatePoint(x2, y2));
+        return points;
+        break;
+    }
+    default:
+        break;
+    }
+    return points;
+}
+
+void Canvas::convertQShapeToPolygon()
+{
+    if (!Pshapes.empty ())
+        Pshapes.clear ();
+    for (auto &shape : shapes)
+      Pshapes.push_back(shapeUpdate(shape));
 }
 
 void Canvas::setShapeSize(int width, int height)

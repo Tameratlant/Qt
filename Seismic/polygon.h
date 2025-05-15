@@ -8,9 +8,11 @@
 #include "point.h"
 
 class Polygon {
-public:
     QList<Point> points;
     QList<Edge> edges;
+public:
+    Polygon(QList<Point>);
+
     void addPoint(const Point point) { points.append(point); }
     void draw(QPainter& painter);
     void reorderPoints();
