@@ -12,13 +12,17 @@ SOURCES += \
     canvas.cpp \
     main.cpp \
     mainwindow.cpp \
+    polygon.cpp \
+    reorder.cpp \
     settings.cpp \
     shape_types.cpp
 
 HEADERS += \
     canvas.h \
+    edge.h \
     mainwindow.h \
     point.h \
+    polygon.h \
     settings.h \
     shape_types.h
 

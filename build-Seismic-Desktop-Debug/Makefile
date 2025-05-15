@@ -55,12 +55,14 @@ OBJECTS_DIR   = ./
 SOURCES       = ../Seismic/canvas.cpp \
 		../Seismic/main.cpp \
 		../Seismic/mainwindow.cpp \
+		../Seismic/polygon.cpp \
 		../Seismic/settings.cpp \
 		../Seismic/shape_types.cpp moc_canvas.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = canvas.o \
 		main.o \
 		mainwindow.o \
+		polygon.o \
 		settings.o \
 		shape_types.o \
 		moc_canvas.o \
@@ -122,6 +124,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		../Seismic/.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -143,12 +146,15 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../Seismic/Seismic.pro ../Seismic/canvas.h \
+		../Seismic/edge.h \
 		../Seismic/mainwindow.h \
 		../Seismic/point.h \
+		../Seismic/polygon.h \
 		../Seismic/settings.h \
 		../Seismic/shape_types.h ../Seismic/canvas.cpp \
 		../Seismic/main.cpp \
 		../Seismic/mainwindow.cpp \
+		../Seismic/polygon.cpp \
 		../Seismic/settings.cpp \
 		../Seismic/shape_types.cpp
 QMAKE_TARGET  = Seismic
@@ -219,6 +225,7 @@ Makefile: ../Seismic/Seismic.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -298,6 +305,7 @@ Makefile: ../Seismic/Seismic.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -334,8 +342,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Seismic/canvas.h ../Seismic/mainwindow.h ../Seismic/point.h ../Seismic/settings.h ../Seismic/shape_types.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Seismic/canvas.cpp ../Seismic/main.cpp ../Seismic/mainwindow.cpp ../Seismic/settings.cpp ../Seismic/shape_types.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Seismic/canvas.h ../Seismic/edge.h ../Seismic/mainwindow.h ../Seismic/point.h ../Seismic/polygon.h ../Seismic/settings.h ../Seismic/shape_types.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Seismic/canvas.cpp ../Seismic/main.cpp ../Seismic/mainwindow.cpp ../Seismic/polygon.cpp ../Seismic/settings.cpp ../Seismic/shape_types.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Seismic/mainwindow.ui $(DISTDIR)/
 
 
@@ -378,6 +386,8 @@ moc_canvas.cpp: ../Seismic/canvas.h \
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/tamerlan/workspace/Qt/build-Seismic-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/tamerlan/workspace/Qt/Seismic -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Seismic/canvas.h -o moc_canvas.cpp
 
 moc_mainwindow.cpp: ../Seismic/mainwindow.h \
+		../Seismic/canvas.h \
+		../Seismic/shape_types.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/tamerlan/workspace/Qt/build-Seismic-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/tamerlan/workspace/Qt/Seismic -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Seismic/mainwindow.h -o moc_mainwindow.cpp
@@ -407,12 +417,22 @@ canvas.o: ../Seismic/canvas.cpp ../Seismic/canvas.h \
 		../Seismic/shape_types.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o canvas.o ../Seismic/canvas.cpp
 
-main.o: ../Seismic/main.cpp ../Seismic/mainwindow.h
+main.o: ../Seismic/main.cpp ../Seismic/mainwindow.h \
+		../Seismic/canvas.h \
+		../Seismic/shape_types.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Seismic/main.cpp
 
 mainwindow.o: ../Seismic/mainwindow.cpp ../Seismic/mainwindow.h \
+		../Seismic/canvas.h \
+		../Seismic/shape_types.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Seismic/mainwindow.cpp
+
+polygon.o: ../Seismic/polygon.cpp ../Seismic/polygon.h \
+		../Seismic/edge.h \
+		../Seismic/point.h \
+		../Seismic/reorder.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o polygon.o ../Seismic/polygon.cpp
 
 settings.o: ../Seismic/settings.cpp ../Seismic/settings.h \
 		../Seismic/point.h \
