@@ -32,6 +32,8 @@ int ccw(const Point& a, const Point& b, const Point& c) {
 
 // Алгоритм Graham Scan
 QList<Point> grahamScan(QList<Point>& points) {
+    if (points.size() < 4)
+        return points;
     // Находим самую нижнюю точку
     int minIndex = 0;
     for (int i = 1; i < points.size(); i++) {

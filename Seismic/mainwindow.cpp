@@ -2,6 +2,10 @@
 #include "qlabel.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include <QPoint>
+#include <QList>
+#include <fstream>
+#include <vector>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -149,4 +153,28 @@ void MainWindow::updateShapeParameters(ShapeType type)
     canvas->setShapeSize(width, lenght);
     canvas->setShapeRotation(rotation);
     canvas->setPos(pos);
+}
+
+void writePointsToBinaryFiles(const QList<QPoint>& points) {
+    // Prepare data vectors
+    std::vector<float> x_coords;
+    std::vector<float> y_coords;
+    std::vector<float> z_coords;
+
+    x_coords.reserve(points.size());
+    y_coords.reserve(points.size());
+    z_coords.reserve(points.size());
+
+    for (const QPoint& point : points) {
+        x_coords.push_back(static_cast<float>(point.x()));
+        y_coords.push_back(static_cast<float>(point.y()));
+        z_coords.push_back(0.0f); // z is always 0
+    }
+    std::ofstream x_file("x.bin", std::ios::binary);
+    std::ofstream y_file("y.bin", std::ios::binary);
+    std::ofstream z_file("z.bin", std::ios::binary);
+
+    x_file.write(reinterpret_cast<const char*>(x_coords.data()), x_coords.size() * sizeof(float));
+    y_file.write(reinterpret_cast<const char*>(y_coords.data()), y_coords.size() * sizeof(float));
+    z_file.write(reinterpret_cast<const char*>(z_coords.data()), z_coords.size() * sizeof(float));
 }

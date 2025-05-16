@@ -41,44 +41,19 @@ Polygon Canvas::convertQShapeToPolygon(Shape& shape)
         }
         break;
     }
-    case ShapeType::simple_fissure: {
-        pointCount = get_num_of_point_to_approx(shape.type);
-        int pointsPerSide = pointCount / 4;
-        if (pointsPerSide < 1) pointsPerSide = 1;
 
-        for (int i = 0; i < pointsPerSide; ++i) {
-            qreal x = -halfWidth + (2 * halfWidth * i) / (pointsPerSide - 1);
-            qreal y = -halfHeight;
-            points.append(rotatePoint(x, y));
-        }
-
-        for (int i = 1; i < pointsPerSide; ++i) {
-            qreal x = halfWidth;
-            qreal y = -halfHeight + (2 * halfHeight * i) / (pointsPerSide - 1);
-            points.append(rotatePoint(x, y));
-        }
-
-        for (int i = 1; i < pointsPerSide; ++i) {
-            qreal x = halfWidth - (2 * halfWidth * i) / (pointsPerSide - 1);
-            qreal y = halfHeight;
-            points.append(rotatePoint(x, y));
-        }
-
-        for (int i = 1; i < pointsPerSide - 1; ++i) {
-            qreal x = -halfWidth;
-            qreal y = halfHeight - (2 * halfHeight * i) / (pointsPerSide - 1);
-            points.append(rotatePoint(x, y));
-        }
-        return Polygon(points);
-    }
     case ShapeType::thin_fissure: {
-        qreal x1 = -halfWidth;
-        qreal y1 = 0;
-        qreal x2 = halfWidth;
-        qreal y2 = 0;
-        points.append(rotatePoint(x1, y1));
-        points.append(rotatePoint(x2, y2));
-        return points;
+        // Отрезок: 2 точки (начало и конец)
+        points.append(rotatePoint(-halfWidth, 0));  // Начало отрезка
+        points.append(rotatePoint(halfWidth, 0));   // Конец отрезка
+        break;
+    }
+    case ShapeType::simple_fissure: {
+        // Прямоугольник: 4 точки (углы)
+        points.append(rotatePoint(-halfWidth, -halfHeight));  // Верхний левый
+        points.append(rotatePoint(halfWidth, -halfHeight));   // Верхний правый
+        points.append(rotatePoint(halfWidth, halfHeight));    // Нижний правый
+        points.append(rotatePoint(-halfWidth, halfHeight));  // Нижний левый
         break;
     }
     default:
@@ -190,23 +165,9 @@ void Canvas::drawShape(QPainter &painter, Shape &shape)
     auto polygon = convertQShapeToPolygon(shape);
     polygon.draw(painter);
     polygon.fillEdges();
-    //painter.drawEllipse(QPointF(0, 0), shape.size.width() / 2, shape.size.height() / 2);
-    /*
-    switch (shape.type) {
-    case ShapeType::eleptic_pore:
-        painter.drawEllipse(QPointF(0, 0), shape.size.width() / 2, shape.size.height() / 2);
-        break;
-    case ShapeType::simple_fissure:
-        painter.drawRect(-shape.size.width() / 2, -shape.size.height() / 2, shape.size.width(), shape.size.height());
-        break;
-    case ShapeType::thin_fissure:
-        painter.drawRect(-shape.size.width() / 2, -shape.size.height() / 2, shape.size.width(), shape.size.height());
-        break;
-    default:
-        break;
-    }
-    */
-
+    auto tmpList = polygon.getPoints();
+    for (auto &p : tmpList)
+      pointsToGrid.push_back(p);
 
     painter.restore();
 }

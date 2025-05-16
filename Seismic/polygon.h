@@ -9,9 +9,8 @@
 
 class Polygon {
     QList<Point> points;
-
-public:
     QList<Edge> edges;
+public:
     Polygon(QList<Point> &Qpoints);
 
     void addPoint(const Point point) { points.append(point); }
@@ -20,6 +19,7 @@ public:
     void fillEdges();
     void fillPoints();
     bool isPointInsidePolygon(const Point& point);
+    QList<Point> getPoints() const;
 };
 
 #endif // POLYGON_H

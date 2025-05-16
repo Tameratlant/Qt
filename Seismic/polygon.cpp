@@ -97,3 +97,8 @@ bool Polygon::isPointInsidePolygon(const Point& point) {
     return intersections % 2 == 1;
 }
 
+QList<Point> Polygon::getPoints() const {
+  auto tmp = points;
+  return tmp;
+}
+

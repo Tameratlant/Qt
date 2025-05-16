@@ -17,7 +17,7 @@ struct Shape {
 class Canvas : public QWidget
 {
     Q_OBJECT
-
+    QList<Point> pointsToGrid;
 public:
     explicit Canvas(QWidget *parent = nullptr);
     Polygon convertQShapeToPolygon(Shape& shape);
