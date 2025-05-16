@@ -19,21 +19,25 @@ void Polygon::draw(QPainter &painter) {
 }
 */
 
-Polygon::Polygon(QList<Point>)
+Polygon::Polygon(QList<Point>& Qpoints)
 {
-  for (auto& point : points)
+  points.clear ();
+  for (auto& point : Qpoints)
       addPoint(point);
   reorderPoints ();
 }
 
 void Polygon::draw(QPainter &painter) {
+    if (edges.empty())
+        fillEdges();
     // Проходим по всем ребрам
     for (const auto &edge : this->edges) {
         // Устанавливаем цвет пера
-        painter.setPen(QPen(edge.color));
+        painter.setPen(QPen(Qt::black, 2));
 
         // Рисуем линию между точками
-        painter.drawLine(QPoint(edge.A.x(), edge.A.y()), QPoint(edge.B.x(), edge.B.y()));
+        //painter.drawLine(QPoint(edge.A.x(), edge.A.y()), QPoint(edge.B.x(), edge.B.y()));
+        painter.drawLine(edge.A, edge.B);
     }
 }
 void Polygon::reorderPoints() {

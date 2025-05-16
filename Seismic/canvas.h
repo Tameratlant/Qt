@@ -20,6 +20,7 @@ class Canvas : public QWidget
 
 public:
     explicit Canvas(QWidget *parent = nullptr);
+    Polygon convertQShapeToPolygon(Shape& shape);
     void setShapeType(ShapeType type); // Используем enum
     void setShapeSize(int width, int height);
     void setShapeRotation(int angle);
@@ -32,12 +33,13 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    void convertQShapeToPolygon ();
+    void shapeUpdate ();
+
     ShapeType currentShapeType; // Текущий тип фигуры (используем enum)
     QList<Shape> shapes; // Список всех фигур
     QList<Polygon> Pshapes; // Список всех фигур в виде полигонов
     int activeShapeIndex; // Индекс активной фигуры
 
     QSizeF getDefaultSize(ShapeType type);
-    void drawShape(QPainter &painter, const Shape &shape);
+    void drawShape(QPainter &painter, Shape &shape);
 };

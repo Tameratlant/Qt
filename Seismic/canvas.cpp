@@ -13,7 +13,7 @@ void Canvas::setShapeType(ShapeType type)
     currentShapeType = type;
 }
 
-QList<Point> shapeUpdate(Shape shape)
+Polygon Canvas::convertQShapeToPolygon(Shape& shape)
 {
     QList<Point> points;
     int pointCount;
@@ -69,7 +69,7 @@ QList<Point> shapeUpdate(Shape shape)
             qreal y = halfHeight - (2 * halfHeight * i) / (pointsPerSide - 1);
             points.append(rotatePoint(x, y));
         }
-        return points;
+        return Polygon(points);
     }
     case ShapeType::thin_fissure: {
         qreal x1 = -halfWidth;
@@ -84,15 +84,15 @@ QList<Point> shapeUpdate(Shape shape)
     default:
         break;
     }
-    return points;
+    return Polygon(points);
 }
 
-void Canvas::convertQShapeToPolygon()
+void Canvas::shapeUpdate()
 {
     if (!Pshapes.empty ())
         Pshapes.clear ();
     for (auto &shape : shapes)
-      Pshapes.push_back(shapeUpdate(shape));
+      Pshapes.push_back(convertQShapeToPolygon(shape));
 }
 
 void Canvas::setShapeSize(int width, int height)
@@ -182,12 +182,16 @@ void Canvas::mousePressEvent(QMouseEvent *event)
     update();
 }
 
-void Canvas::drawShape(QPainter &painter, const Shape &shape)
+void Canvas::drawShape(QPainter &painter, Shape &shape)
 {
     painter.save();
     painter.translate(shape.position);
     painter.rotate(shape.rotation);
-
+    auto polygon = convertQShapeToPolygon(shape);
+    polygon.draw(painter);
+    polygon.fillEdges();
+    //painter.drawEllipse(QPointF(0, 0), shape.size.width() / 2, shape.size.height() / 2);
+    /*
     switch (shape.type) {
     case ShapeType::eleptic_pore:
         painter.drawEllipse(QPointF(0, 0), shape.size.width() / 2, shape.size.height() / 2);
@@ -201,6 +205,8 @@ void Canvas::drawShape(QPainter &painter, const Shape &shape)
     default:
         break;
     }
+    */
+
 
     painter.restore();
 }

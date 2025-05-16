@@ -9,9 +9,10 @@
 
 class Polygon {
     QList<Point> points;
-    QList<Edge> edges;
+
 public:
-    Polygon(QList<Point>);
+    QList<Edge> edges;
+    Polygon(QList<Point> &Qpoints);
 
     void addPoint(const Point point) { points.append(point); }
     void draw(QPainter& painter);
